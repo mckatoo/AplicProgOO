@@ -23,7 +23,7 @@ java -jar build\lib\*.jar
 
 Solicitações pull são bem-vindas. Para grandes mudanças, abra uma Issue primeiro para discutir o que você gostaria de mudar.
 
-Atualize os testes conforme apropriado.
+Atualize os testes apropriadamente.
 
 ## Licença
 
