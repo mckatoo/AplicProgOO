@@ -21,7 +21,7 @@ java -jar build\lib\*.jar
 
 ## Contribuindo
 
-Solicitações pull são bem-vindas. Para grandes mudanças, abra um uma Issue primeiro para discutir o que você gostaria de mudar.
+Solicitações pull são bem-vindas. Para grandes mudanças, abra uma Issue primeiro para discutir o que você gostaria de mudar.
 
 Atualize os testes conforme apropriado.
 
