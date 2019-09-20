@@ -20,9 +20,11 @@ java -jar build\lib\*.jar
 ```
 
 ## Contribuindo
-Solicitações pull são bem-vindas. Para grandes mudanças, abra um problema primeiro para discutir o que você gostaria de mudar.
+
+Solicitações pull são bem-vindas. Para grandes mudanças, abra um uma Issue primeiro para discutir o que você gostaria de mudar.
 
 Atualize os testes conforme apropriado.
 
 ## Licença
-[MIT] (https://choosealicense.com/licenses/mit/)
+
+[MIT](https://choosealicense.com/licenses/mit/)
