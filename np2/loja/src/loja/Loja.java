@@ -5,7 +5,6 @@
  */
 package loja;
 
-import javax.swing.JFrame;
 import loja.gui.NotasGUI;
 
 /**
@@ -19,7 +18,7 @@ public class Loja {
      */
     public static void main(String[] args) {
         NotasGUI notasGUI = new NotasGUI();
-        notasGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        notasGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         notasGUI.setVisible(true);
     }
     

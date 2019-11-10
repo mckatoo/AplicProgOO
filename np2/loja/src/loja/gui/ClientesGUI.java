@@ -5,17 +5,14 @@
  */
 package loja.gui;
 
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import loja.banco.tabelas.clientes.ClienteBean;
 import loja.banco.tabelas.clientes.ClienteDAO;
+import loja.table_model.ClientesTableModel;
 
 /**
  *
@@ -26,8 +23,11 @@ public class ClientesGUI extends javax.swing.JFrame {
     /**
      * Creates new form NotasGUI
      */
+    ClientesTableModel model = new ClientesTableModel();
+
     public ClientesGUI() {
         initComponents();
+        jTableClientes.setModel(model);
         preencherTable();
     }
 
@@ -62,6 +62,7 @@ public class ClientesGUI extends javax.swing.JFrame {
         jTableClientes = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         menuSair = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -82,11 +83,6 @@ public class ClientesGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-        });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
@@ -106,19 +102,20 @@ public class ClientesGUI extends javax.swing.JFrame {
             }
         });
         txtEndereco.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtEnderecoKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEnderecoKeyPressed(evt);
             }
         });
 
+        txtCodigo.setEnabled(false);
         txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodigoFocusLost(evt);
             }
         });
         txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCodigoKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyPressed(evt);
             }
         });
 
@@ -128,8 +125,8 @@ public class ClientesGUI extends javax.swing.JFrame {
             }
         });
         txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNomeKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeKeyPressed(evt);
             }
         });
 
@@ -139,8 +136,8 @@ public class ClientesGUI extends javax.swing.JFrame {
             }
         });
         txtEstado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtEstadoKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEstadoKeyPressed(evt);
             }
         });
 
@@ -196,6 +193,7 @@ public class ClientesGUI extends javax.swing.JFrame {
 
         btnAlterar.setBackground(new java.awt.Color(204, 204, 204));
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -253,13 +251,13 @@ public class ClientesGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "NOME", "ENDEREÇO", "ESTADO"
+
             }
         ));
         jTableClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jTableClientes.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTableClientesFocusGained(evt);
+        jTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableClientesMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(jTableClientes);
@@ -309,6 +307,14 @@ public class ClientesGUI extends javax.swing.JFrame {
 
         jMenu1.setText("Arquivo");
 
+        jMenuItem4.setText("Configurações");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
         menuSair.setText("Sair");
         menuSair.setName("menuSair"); // NOI18N
         menuSair.addActionListener(new java.awt.event.ActionListener() {
@@ -347,17 +353,13 @@ public class ClientesGUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuSairActionPerformed
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-
-    }//GEN-LAST:event_formWindowActivated
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         NotasGUI notaGUI = new NotasGUI();
-        notaGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        notaGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         notaGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -374,7 +376,7 @@ public class ClientesGUI extends javax.swing.JFrame {
             Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         limparCampos();
-        preencherTable();
+        model.addRow(clienteBean);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -389,44 +391,15 @@ public class ClientesGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        limparCampos();
-        
-        
-        DefaultTableModel model = (DefaultTableModel) jTableClientes.getModel();
-        ClienteDAO c = new ClienteDAO();
-        model.setNumRows(0);
-
-        try {
-            for (ClienteBean cliente : c.listarTodos()) {
-                model.addRow(new Object[]{
-                    cliente.getCodCli(),
-                    cliente.getNome(),
-                    cliente.getEndereco(),
-                    "" + Arrays.toString(cliente.getEstado()).charAt(1) + Arrays.toString(cliente.getEstado()).charAt(4)
-                });
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+        int linhaSelecionada = jTableClientes.getSelectedRow();
+        if (linhaSelecionada != -1) {
+            model.setValueAt(txtCodigo.getText(), linhaSelecionada, 0);
+            model.setValueAt(txtNome.getText(), linhaSelecionada, 1);
+            model.setValueAt(txtEndereco.getText(), linhaSelecionada, 2);
+            model.setValueAt(txtEstado.getText(), linhaSelecionada, 3);
         }
-        
-        
+        limparCampos();
     }//GEN-LAST:event_btnAlterarActionPerformed
-
-    private void jTableClientesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableClientesFocusGained
-        jTableClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int linha = jTableClientes.getSelectedRow();
-                txtCodigo.setEnabled(true);
-                txtCodigo.setText(jTableClientes.getValueAt(linha, 0).toString());
-                txtCodigo.setEditable(false);
-                txtNome.setText(jTableClientes.getValueAt(linha, 1).toString());
-                txtEndereco.setText(jTableClientes.getValueAt(linha, 2).toString());
-                txtEstado.setText(jTableClientes.getValueAt(linha, 3).toString());
-                verificarCampos();
-            }
-        });
-    }//GEN-LAST:event_jTableClientesFocusGained
 
     private void txtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNomeFocusLost
         verificarCampos();
@@ -440,39 +413,76 @@ public class ClientesGUI extends javax.swing.JFrame {
         verificarCampos();
     }//GEN-LAST:event_txtEstadoFocusLost
 
-    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
-        verificarCampos();
-    }//GEN-LAST:event_txtNomeKeyReleased
-
-    private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
-        verificarCampos();
-    }//GEN-LAST:event_txtCodigoKeyReleased
-
-    private void txtEnderecoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyReleased
-        verificarCampos();
-    }//GEN-LAST:event_txtEnderecoKeyReleased
-
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
         verificarCampos();
     }//GEN-LAST:event_txtCodigoFocusLost
-
-    private void txtEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyReleased
-        verificarCampos();
-    }//GEN-LAST:event_txtEstadoKeyReleased
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         ClienteDAO clienteDAO = new ClienteDAO();
         int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir " + txtNome.getText() + "?", "Confirma exclusão?", JOptionPane.YES_NO_OPTION);
         if (confirma == 0 && !txtCodigo.getText().isEmpty()) {
             try {
-                clienteDAO.excluir(Integer.parseInt(txtCodigo.getText()));
+                int linhaSelecionada = jTableClientes.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    clienteDAO.excluir(Integer.parseInt(txtCodigo.getText()));
+                    model.removeRow(linhaSelecionada);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "É NECESSÁRIO SELECIONAR UM CLIENTE!");
         }
         limparCampos();
-        preencherTable();
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void jTableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClientesMouseClicked
+        int linha = jTableClientes.getSelectedRow();
+        txtCodigo.setEnabled(true);
+        txtCodigo.setText(jTableClientes.getValueAt(linha, 0).toString());
+        txtCodigo.setEditable(false);
+        txtNome.setText(jTableClientes.getValueAt(linha, 1).toString());
+        txtEndereco.setText(jTableClientes.getValueAt(linha, 2).toString());
+        txtEstado.setText(jTableClientes.getValueAt(linha, 3).toString());
+        verificarCampos();
+        txtNome.requestFocus();
+    }//GEN-LAST:event_jTableClientesMouseClicked
+
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+        verificarCampos();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtEndereco.requestFocus();
+        }
+    }//GEN-LAST:event_txtNomeKeyPressed
+
+    private void txtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyPressed
+        verificarCampos();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtNome.requestFocus();
+        }
+    }//GEN-LAST:event_txtCodigoKeyPressed
+
+    private void txtEnderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyPressed
+        verificarCampos();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtEstado.requestFocus();
+        }
+    }//GEN-LAST:event_txtEnderecoKeyPressed
+
+    private void txtEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyPressed
+        verificarCampos();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER && txtCodigo.isEnabled()){
+            btnAlterar.doClick();
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnCadastrar.doClick();
+        }
+    }//GEN-LAST:event_txtEstadoKeyPressed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ConfiguracoesGUI configGUI = new ConfiguracoesGUI();
+        configGUI.setVisible(true);
+        configGUI.setAlwaysOnTop(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,18 +518,11 @@ public class ClientesGUI extends javax.swing.JFrame {
     }
 
     private void preencherTable() {
-        DefaultTableModel model = (DefaultTableModel) jTableClientes.getModel();
         ClienteDAO clienteDAO = new ClienteDAO();
-        model.setNumRows(0);
 
         try {
             for (ClienteBean cliente : clienteDAO.listarTodos()) {
-                model.addRow(new Object[]{
-                    cliente.getCodCli(),
-                    cliente.getNome(),
-                    cliente.getEndereco(),
-                    "" + Arrays.toString(cliente.getEstado()).charAt(1) + Arrays.toString(cliente.getEstado()).charAt(4)
-                });
+                model.addRow(cliente);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -568,6 +571,7 @@ public class ClientesGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

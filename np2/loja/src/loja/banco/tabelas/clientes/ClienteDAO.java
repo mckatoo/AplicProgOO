@@ -12,7 +12,8 @@ import loja.banco.Conexao;
  * ClienteDAO
  */
 public class ClienteDAO {
-        private PreparedStatement ps = null;
+
+    private PreparedStatement ps = null;
 
     public void inserir(ClienteBean clientes) throws SQLException {
         Connection con = Conexao.abrirConexao();
