@@ -1,4 +1,4 @@
-package loja.banco.tabelas.clientes;
+package loja.banco.tabelas.pneus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,21 +9,23 @@ import java.util.List;
 import loja.banco.Conexao;
 
 /**
- * ClienteDAO
+ * PneuDAO
  */
-public class ClienteDAO {
+public class PneuDAO {
 
     private PreparedStatement ps = null;
 
-    public void inserir(ClienteBean clientes) throws SQLException {
+    public void inserir(PneuBean pneus) throws SQLException {
         Connection con = Conexao.abrirConexao();
-        String sql = "insert into clientes(nome, endereco, estado)values(?,?,?)";
+        String sql = "insert into pneus(codPneu, descricao, medidas, preco, ativo)values(?,?,?,?,?)";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, clientes.getNome());
-            ps.setString(2, clientes.getEndereco());
-            ps.setString(3, String.valueOf(clientes.getEstado()));
+            ps.setString(1, String.valueOf(pneus.getCodPneu()));
+            ps.setString(2, pneus.getDescricao());
+            ps.setString(3, pneus.getMedidas());
+            ps.setString(4, String.valueOf(pneus.getPreco()));
+            ps.setString(5, String.valueOf(pneus.getAtivo()));
             if (ps.executeUpdate() > 0) {
                 System.out.println("Inserido com sucesso!");
             }
@@ -34,17 +36,18 @@ public class ClienteDAO {
         }
     }
 
-    public void alterar(ClienteBean clientes) throws SQLException {
+    public void alterar(PneuBean pneus) throws SQLException {
         Connection con = Conexao.abrirConexao();
-        String sql = "update clientes set nome = ?,endereco = ?,estado = ?";
+        String sql = "update pneus set codPneu = ?, descricao = ?, medidas = ?, preco = ?, ativo = ?";
         sql += " where codCli = ?";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, clientes.getNome());
-            ps.setString(2, clientes.getEndereco());
-            ps.setString(3, String.valueOf(clientes.getEstado()));
-            ps.setString(4, String.valueOf(clientes.getCodCli()));
+            ps.setString(1, String.valueOf(pneus.getCodPneu()));
+            ps.setString(2, pneus.getDescricao());
+            ps.setString(3, pneus.getMedidas());
+            ps.setString(4, String.valueOf(pneus.getPreco()));
+            ps.setString(5, String.valueOf(pneus.getAtivo()));
             if (ps.executeUpdate() > 0) {
                 System.out.println("Atualizado com sucesso!");
             }
@@ -55,12 +58,12 @@ public class ClienteDAO {
         }
     }
 
-    public String excluir(int codCli) throws SQLException {
+    public String excluir(int codPneu) throws SQLException {
         Connection con = Conexao.abrirConexao();
-        String sql = "delete from clientes where codCli = ?";
+        String sql = "delete from pneus where codPneu = ?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, String.valueOf(codCli));
+            ps.setString(1, String.valueOf(codPneu));
             if (ps.executeUpdate() > 0) {
                 return "Excluido com sucesso.";
             }
@@ -72,25 +75,26 @@ public class ClienteDAO {
         return null;
     }
 
-    public List<ClienteBean> listarTodos() throws SQLException {
+    public List<PneuBean> listarTodos() throws SQLException {
         Connection con = Conexao.abrirConexao();
-        String sql = "select * from clientes ";
+        String sql = "select * from pneus ";
         ResultSet rs = null;
-        List<ClienteBean> listaClientes = new ArrayList<>();
+        List<PneuBean> listaPneus = new ArrayList<>();
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    ClienteBean cb = new ClienteBean();
-                    cb.setCodCli(rs.getInt("codCli"));
-                    cb.setNome(rs.getString("nome"));
-                    cb.setEndereco(rs.getString("endereco"));
-                    cb.setEstado(rs.getString("estado").toCharArray());
-                    listaClientes.add(cb);
+                    PneuBean cb = new PneuBean();
+                    cb.setCodPneu(rs.getInt("codPneu"));
+                    cb.setDescricao(rs.getString("descricao"));
+                    cb.setMedidas(rs.getString("medidas"));
+                    cb.setPreco(rs.getBigDecimal("preco"));
+                    cb.setAtivo(rs.getString("ativo").toCharArray());
+                    listaPneus.add(cb);
                 }
                 System.out.println("Listado com sucesso!");
-                return listaClientes;
+                return listaPneus;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

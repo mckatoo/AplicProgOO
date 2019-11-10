@@ -1,44 +1,56 @@
-package loja.banco.tabelas.clientes;
+package loja.banco.tabelas.pneus;
+
+import java.math.BigDecimal;
 
 /**
- * ClienteBean
+ * PneuBean
  */
-public class ClienteBean {
-    private int codCli;
-    private String nome;
-    private String endereco;
-    private char[] estado;
+public class PneuBean {
+    private int codPneu;
+    private String descricao;
+    private String medidas;
+    private BigDecimal preco;
+    private char[] ativo;
 
-    public int getCodCli() {
-        return codCli;
+    public int getCodPneu() {
+        return codPneu;
     }
 
-    public void setCodCli(int codCli) {
-        this.codCli = codCli;
+    public void setCodPneu(int codPneu) {
+        this.codPneu = codPneu;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getMedidas() {
+        return medidas;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setMedidas(String medidas) {
+        this.medidas = medidas;
     }
 
-    public char[] getEstado() {
-        return estado;
+    public BigDecimal getPreco() {
+        return preco;
     }
 
-    public void setEstado(char[] estado) {
-        this.estado = estado;
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
     }
 
+    public char[] getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(char[] ativo) {
+        this.ativo = ativo;
+    }
+    
+    
 }

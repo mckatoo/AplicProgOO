@@ -6,28 +6,29 @@
 package loja.gui;
 
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import loja.banco.tabelas.clientes.ClienteBean;
-import loja.banco.tabelas.clientes.ClienteDAO;
-import loja.table_model.ClientesTableModel;
+import loja.banco.tabelas.pneus.PneuBean;
+import loja.banco.tabelas.pneus.PneuDAO;
+import loja.table_model.PneusTableModel;
 
 /**
  *
  * @author mckatoo
  */
-public class ClientesGUI extends javax.swing.JFrame {
+public class PneusGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form NotasGUI
      */
-    ClientesTableModel model = new ClientesTableModel();
+    PneusTableModel model = new PneusTableModel();
 
-    public ClientesGUI() {
+    public PneusGUI() {
         initComponents();
-        jTableClientes.setModel(model);
+        jTablePneus.setModel(model);
         preencherTable();
     }
 
@@ -48,10 +49,11 @@ public class ClientesGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtEndereco = new javax.swing.JTextField();
+        txtMedidas = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
-        txtNome = new javax.swing.JTextField();
-        txtEstado = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
+        cbAtivo = new javax.swing.JCheckBox();
+        txtPreco = new javax.swing.JFormattedTextField();
         jPanel5 = new javax.swing.JPanel();
         btnCadastrar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -59,7 +61,7 @@ public class ClientesGUI extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTableClientes = new javax.swing.JTable();
+        jTablePneus = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -85,25 +87,25 @@ public class ClientesGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Pneus"));
 
         jLabel1.setText("Código");
         jLabel1.setEnabled(false);
 
-        jLabel2.setText("Nome");
+        jLabel2.setText("Descrição");
 
-        jLabel3.setText("Endereço");
+        jLabel3.setText("Medidas");
 
-        jLabel4.setText("Estado");
+        jLabel4.setText("Preço");
 
-        txtEndereco.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtMedidas.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEnderecoFocusLost(evt);
+                txtMedidasFocusLost(evt);
             }
         });
-        txtEndereco.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtMedidas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEnderecoKeyPressed(evt);
+                txtMedidasKeyPressed(evt);
             }
         });
 
@@ -119,27 +121,20 @@ public class ClientesGUI extends javax.swing.JFrame {
             }
         });
 
-        txtNome.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtDescricao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNomeFocusLost(evt);
+                txtDescricaoFocusLost(evt);
             }
         });
-        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNomeKeyPressed(evt);
+                txtDescricaoKeyPressed(evt);
             }
         });
 
-        txtEstado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEstadoFocusLost(evt);
-            }
-        });
-        txtEstado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEstadoKeyPressed(evt);
-            }
-        });
+        cbAtivo.setText("Ativo");
+
+        txtPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -154,10 +149,14 @@ public class ClientesGUI extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
-                    .addComponent(txtEstado)
-                    .addComponent(txtNome)
-                    .addComponent(txtCodigo))
+                    .addComponent(txtMedidas)
+                    .addComponent(txtDescricao)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPreco))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -166,19 +165,20 @@ public class ClientesGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbAtivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,7 +226,7 @@ public class ClientesGUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -246,7 +246,7 @@ public class ClientesGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTableClientes.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePneus.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -254,13 +254,13 @@ public class ClientesGUI extends javax.swing.JFrame {
 
             }
         ));
-        jTableClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTablePneus.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jTablePneus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableClientesMouseClicked(evt);
+                jTablePneusMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jTableClientes);
+        jScrollPane3.setViewportView(jTablePneus);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -272,7 +272,7 @@ public class ClientesGUI extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 197, Short.MAX_VALUE)
+            .addGap(0, 193, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
         );
@@ -297,7 +297,7 @@ public class ClientesGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -339,7 +339,12 @@ public class ClientesGUI extends javax.swing.JFrame {
         jMenuItem2.setText("Itens");
         jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setText("Pneus");
+        jMenuItem3.setText("Clientes");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -365,124 +370,140 @@ public class ClientesGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        ClienteBean clienteBean = new ClienteBean();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        clienteBean.setNome(txtNome.getText());
-        clienteBean.setEndereco(txtEndereco.getText());
-        clienteBean.setEstado(txtEstado.getText().toCharArray());
+        PneuBean pneuBean = new PneuBean();
+        PneuDAO pneuDAO = new PneuDAO();
+        pneuBean.setDescricao(txtDescricao.getText());
+        pneuBean.setMedidas(txtMedidas.getText());
+        pneuBean.setPreco(new BigDecimal(txtPreco.getText()));
+        char[] ativo = new char[1];
+        if (cbAtivo.isSelected()) {
+            ativo[0] = 'S';
+        }
+        pneuBean.setAtivo(ativo);
         try {
-            clienteDAO.inserir(clienteBean);
+            pneuDAO.inserir(pneuBean);
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         limparCampos();
-        model.addRow(clienteBean);
+        model.addRow(pneuBean);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        ClienteBean clienteBean = new ClienteBean();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        clienteBean.setCodCli(Integer.parseInt(txtCodigo.getText()));
-        clienteBean.setNome(txtNome.getText());
-        clienteBean.setEndereco(txtEndereco.getText());
-        clienteBean.setEstado(txtEstado.getText().toCharArray());
-        try {
-            clienteDAO.alterar(clienteBean);
-        } catch (SQLException ex) {
-            Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+        PneuBean pneuBean = new PneuBean();
+        PneuDAO pneuDAO = new PneuDAO();
+        pneuBean.setCodPneu(Integer.parseInt(txtCodigo.getText()));
+        pneuBean.setDescricao(txtDescricao.getText());
+        pneuBean.setMedidas(txtMedidas.getText());
+        pneuBean.setPreco(new BigDecimal(txtPreco.getText()));
+        char[] ativo = new char[1];
+        if (cbAtivo.isSelected()) {
+            ativo[0] = 'S';
         }
-        int linhaSelecionada = jTableClientes.getSelectedRow();
+        pneuBean.setAtivo(ativo);
+        try {
+            pneuDAO.inserir(pneuBean);
+        } catch (SQLException ex) {
+            Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pneuDAO.alterar(pneuBean);
+        } catch (SQLException ex) {
+            Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int linhaSelecionada = jTablePneus.getSelectedRow();
         if (linhaSelecionada != -1) {
             model.setValueAt(txtCodigo.getText(), linhaSelecionada, 0);
-            model.setValueAt(txtNome.getText(), linhaSelecionada, 1);
-            model.setValueAt(txtEndereco.getText(), linhaSelecionada, 2);
-            model.setValueAt(txtEstado.getText(), linhaSelecionada, 3);
+            model.setValueAt(txtDescricao.getText(), linhaSelecionada, 1);
+            model.setValueAt(txtMedidas.getText(), linhaSelecionada, 2);
+            model.setValueAt(txtPreco.getText(), linhaSelecionada, 3);
         }
         limparCampos();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void txtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNomeFocusLost
+    private void txtDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescricaoFocusLost
         verificarCampos();
-    }//GEN-LAST:event_txtNomeFocusLost
+    }//GEN-LAST:event_txtDescricaoFocusLost
 
-    private void txtEnderecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEnderecoFocusLost
+    private void txtMedidasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMedidasFocusLost
         verificarCampos();
-    }//GEN-LAST:event_txtEnderecoFocusLost
-
-    private void txtEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEstadoFocusLost
-        verificarCampos();
-    }//GEN-LAST:event_txtEstadoFocusLost
+    }//GEN-LAST:event_txtMedidasFocusLost
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
         verificarCampos();
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        ClienteDAO clienteDAO = new ClienteDAO();
-        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir " + txtNome.getText() + "?", "Confirma exclusão?", JOptionPane.YES_NO_OPTION);
+        PneuDAO pneuDAO = new PneuDAO();
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir " + txtDescricao.getText() + "?", "Confirma exclusão?", JOptionPane.YES_NO_OPTION);
         if (confirma == 0 && !txtCodigo.getText().isEmpty()) {
             try {
-                int linhaSelecionada = jTableClientes.getSelectedRow();
+                int linhaSelecionada = jTablePneus.getSelectedRow();
                 if (linhaSelecionada != -1) {
-                    clienteDAO.excluir(Integer.parseInt(txtCodigo.getText()));
+                    pneuDAO.excluir(Integer.parseInt(txtCodigo.getText()));
                     model.removeRow(linhaSelecionada);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "É NECESSÁRIO SELECIONAR UM CLIENTE!");
+            JOptionPane.showMessageDialog(null, "É NECESSÁRIO SELECIONAR UM PNEU!");
         }
         limparCampos();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void jTableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClientesMouseClicked
-        int linha = jTableClientes.getSelectedRow();
+    private void jTablePneusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePneusMouseClicked
+        int linha = jTablePneus.getSelectedRow();
+        limparCampos();
         txtCodigo.setEnabled(true);
-        txtCodigo.setText(jTableClientes.getValueAt(linha, 0).toString());
+        txtCodigo.setText(jTablePneus.getValueAt(linha, 0).toString());
         txtCodigo.setEditable(false);
-        txtNome.setText(jTableClientes.getValueAt(linha, 1).toString());
-        txtEndereco.setText(jTableClientes.getValueAt(linha, 2).toString());
-        txtEstado.setText(jTableClientes.getValueAt(linha, 3).toString());
-        verificarCampos();
-        txtNome.requestFocus();
-    }//GEN-LAST:event_jTableClientesMouseClicked
-
-    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            txtEndereco.requestFocus();
+        if(jTablePneus.getValueAt(linha, 1) != null) txtDescricao.setText(jTablePneus.getValueAt(linha, 1).toString());
+        if(jTablePneus.getValueAt(linha, 2) != null) txtMedidas.setText(jTablePneus.getValueAt(linha, 2).toString());
+        txtPreco.setText(jTablePneus.getValueAt(linha, 3).toString());
+        cbAtivo.setSelected(true);
+        if (jTablePneus.getValueAt(linha, 4).toString() == "S") {
+            cbAtivo.setSelected(true);
+        } else {
+            cbAtivo.setSelected(false);
         }
-    }//GEN-LAST:event_txtNomeKeyPressed
+        verificarCampos();
+        txtDescricao.requestFocus();
+    }//GEN-LAST:event_jTablePneusMouseClicked
+
+    private void txtDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyPressed
+        verificarCampos();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtMedidas.requestFocus();
+        }
+    }//GEN-LAST:event_txtDescricaoKeyPressed
 
     private void txtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyPressed
         verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            txtNome.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtDescricao.requestFocus();
         }
     }//GEN-LAST:event_txtCodigoKeyPressed
 
-    private void txtEnderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyPressed
+    private void txtMedidasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedidasKeyPressed
         verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            txtEstado.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtPreco.requestFocus();
         }
-    }//GEN-LAST:event_txtEnderecoKeyPressed
-
-    private void txtEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyPressed
-        verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER && txtCodigo.isEnabled()){
-            btnAlterar.doClick();
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btnCadastrar.doClick();
-        }
-    }//GEN-LAST:event_txtEstadoKeyPressed
+    }//GEN-LAST:event_txtMedidasKeyPressed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         ConfiguracoesGUI configGUI = new ConfiguracoesGUI();
         configGUI.setVisible(true);
         configGUI.setAlwaysOnTop(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ClientesGUI clienteGUI = new ClientesGUI();
+//        clienteGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        clienteGUI.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -501,8 +522,10 @@ public class ClientesGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PneusGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -512,25 +535,25 @@ public class ClientesGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientesGUI().setVisible(true);
+                new PneusGUI().setVisible(true);
             }
         });
     }
 
     private void preencherTable() {
-        ClienteDAO clienteDAO = new ClienteDAO();
+        PneuDAO pneuDAO = new PneuDAO();
 
         try {
-            for (ClienteBean cliente : clienteDAO.listarTodos()) {
-                model.addRow(cliente);
+            for (PneuBean pneu : pneuDAO.listarTodos()) {
+                model.addRow(pneu);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void verificarCampos() {
-        if (!txtNome.getText().isEmpty() && !txtEndereco.getText().isEmpty() && !txtEstado.getText().isEmpty()) {
+        if (!txtPreco.getText().isEmpty()) {
             if (txtCodigo.isEnabled()) {
                 btnCadastrar.setEnabled(false);
                 btnAlterar.setEnabled(true);
@@ -550,10 +573,10 @@ public class ClientesGUI extends javax.swing.JFrame {
     private void limparCampos() {
         txtCodigo.setText("");
         txtCodigo.setEnabled(false);
-        txtNome.setText("");
-        txtEndereco.setText("");
-        txtEstado.setText("");
-        txtNome.requestFocus();
+        txtDescricao.setText("");
+        txtMedidas.setText("");
+        txtPreco.setText("");
+        txtDescricao.requestFocus();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -561,6 +584,7 @@ public class ClientesGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSair;
+    private javax.swing.JCheckBox cbAtivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -579,11 +603,11 @@ public class ClientesGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableClientes;
+    private javax.swing.JTable jTablePneus;
     private javax.swing.JMenuItem menuSair;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtEstado;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtMedidas;
+    private javax.swing.JFormattedTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 }
