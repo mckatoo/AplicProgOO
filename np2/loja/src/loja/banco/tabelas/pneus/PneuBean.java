@@ -51,6 +51,11 @@ public class PneuBean {
     public void setAtivo(char[] ativo) {
         this.ativo = ativo;
     }
+
+    @Override
+    public String toString() {
+        return getCodPneu() + " - " + getDescricao() + " " + getPreco();
+    }
     
     
 }

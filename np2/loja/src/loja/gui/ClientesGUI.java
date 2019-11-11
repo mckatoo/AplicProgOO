@@ -337,6 +337,11 @@ public class ClientesGUI extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Itens");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Pneus");
@@ -455,28 +460,28 @@ public class ClientesGUI extends javax.swing.JFrame {
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
         verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtEndereco.requestFocus();
         }
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void txtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyPressed
         verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtNome.requestFocus();
         }
     }//GEN-LAST:event_txtCodigoKeyPressed
 
     private void txtEnderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyPressed
         verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtEstado.requestFocus();
         }
     }//GEN-LAST:event_txtEnderecoKeyPressed
 
     private void txtEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyPressed
         verificarCampos();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER && txtCodigo.isEnabled()){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER && txtCodigo.isEnabled()) {
             btnAlterar.doClick();
         } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnCadastrar.doClick();
@@ -495,6 +500,13 @@ public class ClientesGUI extends javax.swing.JFrame {
         pneuGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ItensGUI itemGUI = new ItensGUI();
+//        itemGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        itemGUI.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
