@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import loja.banco.Conexao;
@@ -15,23 +16,30 @@ public class ClienteDAO {
 
     private PreparedStatement ps = null;
 
-    public void inserir(ClienteBean clientes) throws SQLException {
+    public int inserir(ClienteBean clientes) throws SQLException {
         Connection con = Conexao.abrirConexao();
         String sql = "insert into clientes(nome, endereco, estado)values(?,?,?)";
+        ResultSet rs;
+        int id = 0;
 
         try {
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, clientes.getNome());
             ps.setString(2, clientes.getEndereco());
             ps.setString(3, String.valueOf(clientes.getEstado()));
             if (ps.executeUpdate() > 0) {
-                System.out.println("Inserido com sucesso!");
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                rs.close();
+                System.out.println("Inserido com sucesso!" + "ID = " + id);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             Conexao.fecharConexao(con, ps);
         }
+        return id;
     }
 
     public void alterar(ClienteBean clientes) throws SQLException {

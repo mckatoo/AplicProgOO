@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,18 +19,24 @@ public class NotaFiscalDAO {
 
     private PreparedStatement ps = null;
 
-    public void inserir(NotaFiscalBean notas) throws SQLException {
+    public int inserir(NotaFiscalBean notas) throws SQLException {
         Connection con = Conexao.abrirConexao();
         String sql = "insert into notaFiscal(numero, serie, codCli, data, cancelada)values(?,?,?,?,?)";
+        ResultSet rs;
+        int id = 0;
 
         try {
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, String.valueOf(notas.getNumero()));
             ps.setString(2, String.valueOf(notas.getSerie()));
             ps.setString(3, String.valueOf(notas.getCodCli()));
             ps.setString(4, String.valueOf(notas.getData()));
             ps.setString(5, String.valueOf(notas.getCancelada()));
             if (ps.executeUpdate() > 0) {
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                rs.close();
                 System.out.println("Inserido com sucesso!");
             }
         } catch (SQLException e) {
@@ -37,6 +44,7 @@ public class NotaFiscalDAO {
         } finally {
             Conexao.fecharConexao(con, ps);
         }
+        return id;
     }
 
     public void alterar(NotaFiscalBean notas) throws SQLException {

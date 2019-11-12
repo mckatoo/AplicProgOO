@@ -12,25 +12,20 @@ import java.util.logging.Logger;
  * Conexao
  */
 public class Conexao {
-    
-    private static String IP = "campus1-iesi.ddns.net";
+
+//    private static String HOST = "10.201.84.10";
+    private static String HOST = "campus1-iesi.ddns.net";
     private static String PORTA = "9005";
     private static String BANCO = "lojaServer";
     private static String USER = "mckatoo";
     private static String PASS = "zicasp2";
-//    private static String IP = "127.0.0.1";
-//    private static String PORTA = "3306";
-//    private static String BANCO = "loja";
-//    private static String USER = "mckatoo";
-//    private static String PASS = "12345";
-    private static final String URL = "jdbc:mysql://"+ IP +":"+ PORTA +"/"+ BANCO;
 
-    public static String getIP() {
-        return IP;
+    public static String getHOST() {
+        return HOST;
     }
 
-    public static void setIP(String IP) {
-        Conexao.IP = IP;
+    public static void setHOST(String HOST) {
+        Conexao.HOST = HOST;
     }
 
     public static String getPORTA() {
@@ -64,14 +59,20 @@ public class Conexao {
     public static void setPASS(String PASS) {
         Conexao.PASS = PASS;
     }
-    
+
     public static Connection abrirConexao() {
+        String URL = "jdbc:mysql://" + HOST + ":" + PORTA + "/" + BANCO;
         Connection con = null;
         try {
             con = DriverManager.getConnection(URL, USER, PASS);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
+            HOST = "10.201.84.10";
+            URL = "jdbc:mysql://" + HOST + ":" + PORTA + "/" + BANCO;
+            try {
+                con = DriverManager.getConnection(URL, USER, PASS);
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println(e.getMessage());
         }
         return con;

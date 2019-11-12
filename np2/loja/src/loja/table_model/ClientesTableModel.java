@@ -19,7 +19,7 @@ public class ClientesTableModel extends AbstractTableModel {
     
     private final List<ClienteBean> dados = new ArrayList<>();
     private final String[] colunas = {"CÓDIGO", "NOME", "ENDEREÇO", "ESTADO"};
-
+    
     @Override
     public String getColumnName(int column) {
         return colunas[column];

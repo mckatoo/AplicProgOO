@@ -452,13 +452,12 @@ public class ItensGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        PneuBean pneu = (PneuBean) cbPneu.getSelectedItem();
-
+        int codPneu = Integer.parseInt(cbPneu.getSelectedItem().toString().split(" - ")[0]);
         ItemBean itemBean = new ItemBean();
         ItemDAO itemDAO = new ItemDAO();
-        itemBean.setCodPneu(pneu.getCodPneu());
+        itemBean.setCodPneu(codPneu);
         itemBean.setQtde(Integer.parseInt(txtQtde.getText()));
-        itemBean.setPreco(new BigDecimal(txtPreco.getText()));
+        itemBean.setPreco(new BigDecimal(txtPreco.getText().replace(",", ".")));
         try {
             itemDAO.alterar(itemBean);
         } catch (SQLException ex) {
@@ -466,22 +465,26 @@ public class ItensGUI extends javax.swing.JFrame {
         }
         int linhaSelecionada = jTableItens.getSelectedRow();
         if (linhaSelecionada != -1) {
-            model.setValueAt(pneu.getDescricao(), linhaSelecionada, 3);
+            model.setValueAt(txtNumero.getText(), linhaSelecionada, 0);
+            model.setValueAt(txtSerie.getText(), linhaSelecionada, 1);
+            model.setValueAt(txtItem.getText(), linhaSelecionada, 2);
+            model.setValueAt(codPneu, linhaSelecionada, 3);
+            model.setValueAt(txtQtde.getText(), linhaSelecionada, 4);
+            model.setValueAt(txtPreco.getText().replace(",", "."), linhaSelecionada, 5);
         }
         limparCampos();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        PneuBean pneu = (PneuBean) cbPneu.getSelectedItem();
-
+        int codPneu = Integer.parseInt(cbPneu.getSelectedItem().toString().split(" - ")[0]);
         ItemBean itemBean = new ItemBean();
         ItemDAO itemDAO = new ItemDAO();
         itemBean.setNumero(txtNumero.getText().toCharArray());
         itemBean.setSerie(txtSerie.getText().toCharArray());
         itemBean.setItem(Integer.parseInt(txtItem.getText()));
-        itemBean.setCodPneu(pneu.getCodPneu());
+        itemBean.setCodPneu(codPneu);
         itemBean.setQtde(Integer.parseInt(txtQtde.getText()));
-        itemBean.setPreco(new BigDecimal(txtPreco.getText()));
+        itemBean.setPreco(new BigDecimal(txtPreco.getText().replace(",", ".")));
         try {
             itemDAO.inserir(itemBean);
         } catch (SQLException ex) {

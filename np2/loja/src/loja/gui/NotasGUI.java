@@ -5,6 +5,7 @@
  */
 package loja.gui;
 
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,6 +106,12 @@ public class NotasGUI extends javax.swing.JFrame {
         jLabel2.setText("Série:");
 
         jLabel3.setText("Cliente:");
+
+        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtClienteKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(rbAtivas);
         rbAtivas.setText("Ativas");
@@ -313,6 +320,9 @@ public class NotasGUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void txtClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyPressed
+    }//GEN-LAST:event_txtClienteKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -360,6 +370,7 @@ public class NotasGUI extends javax.swing.JFrame {
         }
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnPesquisar;

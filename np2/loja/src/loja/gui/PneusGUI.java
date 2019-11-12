@@ -189,7 +189,7 @@ public class PneusGUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         btnCadastrar.setBackground(new java.awt.Color(204, 204, 204));
@@ -282,7 +282,7 @@ public class PneusGUI extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 193, Short.MAX_VALUE)
+            .addGap(0, 189, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
         );
@@ -387,16 +387,18 @@ public class PneusGUI extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         PneuBean pneuBean = new PneuBean();
         PneuDAO pneuDAO = new PneuDAO();
+        int id = 0;
         pneuBean.setDescricao(txtDescricao.getText());
         pneuBean.setMedidas(txtMedidas.getText());
-        pneuBean.setPreco(new BigDecimal(txtPreco.getText()));
+        pneuBean.setPreco(new BigDecimal(txtPreco.getText().replace(",", ".")));
         char[] ativo = new char[1];
         if (cbAtivo.isSelected()) {
             ativo[0] = 'S';
         }
         pneuBean.setAtivo(ativo);
         try {
-            pneuDAO.inserir(pneuBean);
+            id = pneuDAO.inserir(pneuBean);
+            pneuBean.setCodPneu(id);
         } catch (SQLException ex) {
             Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -410,7 +412,7 @@ public class PneusGUI extends javax.swing.JFrame {
         pneuBean.setCodPneu(Integer.parseInt(txtCodigo.getText()));
         pneuBean.setDescricao(txtDescricao.getText());
         pneuBean.setMedidas(txtMedidas.getText());
-        pneuBean.setPreco(new BigDecimal(txtPreco.getText()));
+        pneuBean.setPreco(new BigDecimal(txtPreco.getText().replace(",", ".")));
         char[] ativo = new char[1];
         if (cbAtivo.isSelected()) {
             ativo[0] = 'S';
@@ -431,7 +433,7 @@ public class PneusGUI extends javax.swing.JFrame {
             model.setValueAt(txtCodigo.getText(), linhaSelecionada, 0);
             model.setValueAt(txtDescricao.getText(), linhaSelecionada, 1);
             model.setValueAt(txtMedidas.getText(), linhaSelecionada, 2);
-            model.setValueAt(txtPreco.getText(), linhaSelecionada, 3);
+            model.setValueAt(txtPreco.getText().replace(",", "."), linhaSelecionada, 3);
         }
         limparCampos();
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -531,20 +533,20 @@ public class PneusGUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void txtPrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFocusLost
-        verificarCampos();
-    }//GEN-LAST:event_txtPrecoFocusLost
-
     private void txtPrecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecoKeyPressed
         verificarCampos();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txtCodigo.isEnabled()) {
-                btnAlterar.setEnabled(true);
+                btnCadastrar.requestFocus();
             } else {
-                btnCadastrar.setEnabled(true);
+                btnAlterar.requestFocus();
             }
         }
     }//GEN-LAST:event_txtPrecoKeyPressed
+
+    private void txtPrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFocusLost
+        verificarCampos();
+    }//GEN-LAST:event_txtPrecoFocusLost
 
     /**
      * @param args the command line arguments
@@ -594,7 +596,6 @@ public class PneusGUI extends javax.swing.JFrame {
     }
 
     private void verificarCampos() {
-        System.out.println(txtPreco.getText());
         if (!txtPreco.getText().isEmpty()) {
             if (txtCodigo.isEnabled()) {
                 btnCadastrar.setEnabled(false);

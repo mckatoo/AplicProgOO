@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import loja.banco.Conexao;
@@ -15,12 +16,14 @@ public class ItemDAO {
 
     private PreparedStatement ps = null;
 
-    public void inserir(ItemBean itens) throws SQLException {
+    public int inserir(ItemBean itens) throws SQLException {
         Connection con = Conexao.abrirConexao();
         String sql = "insert into itens(numero, serie, item, codPneu, qtde, preco)values(?,?,?,?,?,?)";
+        ResultSet rs;
+        int id = 0;
 
         try {
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, String.valueOf(itens.getNumero()));
             ps.setString(2, String.valueOf(itens.getSerie()));
             ps.setString(3, String.valueOf(itens.getItem()));
@@ -28,6 +31,10 @@ public class ItemDAO {
             ps.setString(5, String.valueOf(itens.getQtde()));
             ps.setString(6, String.valueOf(itens.getPreco()));
             if (ps.executeUpdate() > 0) {
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                rs.close();
                 System.out.println("Inserido com sucesso!");
             }
         } catch (SQLException e) {
@@ -35,6 +42,7 @@ public class ItemDAO {
         } finally {
             Conexao.fecharConexao(con, ps);
         }
+        return id;
     }
 
     public void alterar(ItemBean itens) throws SQLException {

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import loja.banco.Conexao;
@@ -15,18 +16,24 @@ public class PneuDAO {
 
     private PreparedStatement ps = null;
 
-    public void inserir(PneuBean pneus) throws SQLException {
+    public int inserir(PneuBean pneus) throws SQLException {
         Connection con = Conexao.abrirConexao();
         String sql = "insert into pneus(codPneu, descricao, medidas, preco, ativo)values(?,?,?,?,?)";
+        ResultSet rs;
+        int id = 0;
 
         try {
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, String.valueOf(pneus.getCodPneu()));
             ps.setString(2, pneus.getDescricao());
             ps.setString(3, pneus.getMedidas());
             ps.setString(4, String.valueOf(pneus.getPreco()));
             ps.setString(5, String.valueOf(pneus.getAtivo()));
             if (ps.executeUpdate() > 0) {
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                rs.close();
                 System.out.println("Inserido com sucesso!");
             }
         } catch (SQLException e) {
@@ -34,6 +41,7 @@ public class PneuDAO {
         } finally {
             Conexao.fecharConexao(con, ps);
         }
+        return id;
     }
 
     public void alterar(PneuBean pneus) throws SQLException {

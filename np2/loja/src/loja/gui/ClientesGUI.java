@@ -377,11 +377,13 @@ public class ClientesGUI extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         ClienteBean clienteBean = new ClienteBean();
         ClienteDAO clienteDAO = new ClienteDAO();
+        int id = 0;
         clienteBean.setNome(txtNome.getText());
         clienteBean.setEndereco(txtEndereco.getText());
         clienteBean.setEstado(txtEstado.getText().toCharArray());
         try {
-            clienteDAO.inserir(clienteBean);
+            id = clienteDAO.inserir(clienteBean);
+            clienteBean.setCodCli(id);
         } catch (SQLException ex) {
             Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }

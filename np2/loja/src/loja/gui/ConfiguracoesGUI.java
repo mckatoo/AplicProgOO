@@ -21,7 +21,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
      */
     public ConfiguracoesGUI() {
         initComponents();
-        txtIP.setText(Conexao.getIP());
+        txtHOST.setText(Conexao.getHOST());
         txtPORTA.setText(Conexao.getPORTA());
         txtBANCO.setText(Conexao.getBANCO());
         txtUSUARIO.setText(Conexao.getUSER());
@@ -43,7 +43,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtIP = new javax.swing.JTextField();
+        txtHOST = new javax.swing.JTextField();
         txtPORTA = new javax.swing.JTextField();
         txtBANCO = new javax.swing.JTextField();
         txtUSUARIO = new javax.swing.JTextField();
@@ -55,7 +55,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Banco de Dados Mysql"));
 
-        jLabel1.setText("IP:");
+        jLabel1.setText("HOST:");
 
         jLabel2.setText("PORTA:");
 
@@ -97,7 +97,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtIP)
+                                    .addComponent(txtHOST)
                                     .addComponent(txtPORTA)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,7 +119,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHOST, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -164,7 +164,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        Conexao.setIP(txtIP.getText());
+        Conexao.setHOST(txtHOST.getText());
         Conexao.setPORTA(txtPORTA.getText());
         Conexao.setBANCO(txtBANCO.getText());
         Conexao.setUSER(txtUSUARIO.getText());
@@ -230,7 +230,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtBANCO;
-    private javax.swing.JTextField txtIP;
+    private javax.swing.JTextField txtHOST;
     private javax.swing.JTextField txtPORTA;
     private javax.swing.JPasswordField txtSENHA;
     private javax.swing.JTextField txtUSUARIO;
