@@ -7,11 +7,17 @@ package loja.gui;
 
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import loja.banco.tabelas.clientes.ClienteBean;
+import loja.banco.tabelas.clientes.ClienteDAO;
 import loja.banco.tabelas.notas.NotaFiscalBean;
 import loja.banco.tabelas.notas.NotaFiscalDAO;
 import loja.table_model.NotasTableModel;
+import loja.table_model.renderer.DefaultCellRenderer;
+import loja.uteis.FormataData;
 
 /**
  *
@@ -28,6 +34,7 @@ public class NotasGUI extends javax.swing.JFrame {
         initComponents();
         jTableNotas.setModel(model);
         preencherTable();
+        preencherCbClientes();
     }
 
     /**
@@ -44,20 +51,19 @@ public class NotasGUI extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnPesquisar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnEmitir = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
         txtSerie = new javax.swing.JTextField();
-        txtCliente = new javax.swing.JTextField();
-        rbAtivas = new javax.swing.JRadioButton();
-        rbCanceladas = new javax.swing.JRadioButton();
+        cbClientes = new javax.swing.JComboBox<>();
+        txtData = new javax.swing.JFormattedTextField();
+        cbCancelada = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtDataInicial = new javax.swing.JFormattedTextField();
-        txtDataFinal = new javax.swing.JFormattedTextField();
-        rbTodas = new javax.swing.JRadioButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableNotas = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -76,9 +82,45 @@ public class NotasGUI extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnPesquisar.setBackground(new java.awt.Color(204, 204, 204));
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
-        btnCancelar.setText("Cancelar Nota");
+        btnAlterar.setBackground(new java.awt.Color(204, 204, 204));
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        btnEmitir.setBackground(new java.awt.Color(204, 204, 204));
+        btnEmitir.setText("Emitir Nota");
+        btnEmitir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmitirActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setBackground(new java.awt.Color(204, 204, 204));
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setBackground(new java.awt.Color(204, 204, 204));
+        btnLimpar.setText("Limpar Campos");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -88,17 +130,26 @@ public class NotasGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEmitir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEmitir, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
 
         jLabel1.setText("Número:");
@@ -107,29 +158,49 @@ public class NotasGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Cliente:");
 
-        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNumero.setNextFocusableComponent(txtSerie);
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtClienteKeyPressed(evt);
+                txtNumeroKeyPressed(evt);
             }
         });
 
-        buttonGroup1.add(rbAtivas);
-        rbAtivas.setText("Ativas");
+        txtSerie.setNextFocusableComponent(cbClientes);
+        txtSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSerieKeyPressed(evt);
+            }
+        });
 
-        buttonGroup1.add(rbCanceladas);
-        rbCanceladas.setText("Canceladas");
+        cbClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um Cliente" }));
+        cbClientes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cbClientes.setNextFocusableComponent(txtData);
+        cbClientes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbClientesItemStateChanged(evt);
+            }
+        });
 
-        jLabel4.setText("Data Inicial:");
+        txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        txtData.setNextFocusableComponent(cbCancelada);
+        txtData.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDataFocusLost(evt);
+            }
+        });
+        txtData.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDataKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDataKeyReleased(evt);
+            }
+        });
 
-        jLabel5.setText("Data Final:");
+        cbCancelada.setText("Cancelada");
+        cbCancelada.setNextFocusableComponent(btnPesquisar);
 
-        txtDataInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-
-        txtDataFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-
-        buttonGroup1.add(rbTodas);
-        rbTodas.setSelected(true);
-        rbTodas.setText("Todas");
+        jLabel4.setText("Data:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -137,65 +208,51 @@ public class NotasGUI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rbAtivas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
-                .addComponent(rbTodas)
-                .addGap(119, 119, 119)
-                .addComponent(rbCanceladas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCliente)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtSerie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                        .addGap(196, 196, 196))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbClientes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(19, 19, 19)
-                                .addComponent(txtDataFinal))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDataInicial)))))
-                .addGap(196, 196, 196))
+                                .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbCancelada)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rbAtivas)
-                            .addComponent(rbCanceladas)
-                            .addComponent(rbTodas))))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbCancelada))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
         );
 
@@ -210,6 +267,11 @@ public class NotasGUI extends javax.swing.JFrame {
 
             }
         ));
+        jTableNotas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableNotasMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTableNotas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -220,7 +282,7 @@ public class NotasGUI extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
@@ -295,7 +357,6 @@ public class NotasGUI extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         ClientesGUI clienteGUI = new ClientesGUI();
-//        notaGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         clienteGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -308,20 +369,208 @@ public class NotasGUI extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         PneusGUI pneuGUI = new PneusGUI();
-//        pneuGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pneuGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         ItensGUI itemGUI = new ItensGUI();
-//        itemGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         itemGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void txtClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyPressed
-    }//GEN-LAST:event_txtClienteKeyPressed
+    private void btnEmitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmitirActionPerformed
+        NotaFiscalBean notaBean = new NotaFiscalBean();
+        try {
+            int codCli = Integer.parseInt(cbClientes.getSelectedItem().toString().split(" - ")[0]);
+            NotaFiscalDAO notaDAO = new NotaFiscalDAO();
+            notaBean.setNumero(txtNumero.getText().toCharArray());
+            notaBean.setSerie(txtSerie.getText().toCharArray());
+            notaBean.setCodCli(codCli);
+            LocalDate data = LocalDate.parse((String) FormataData.BRtoUS(txtData.getText()));
+            notaBean.setData(data);
+            char[] cancelada = new char[1];
+            if (cbCancelada.isSelected()) {
+                cancelada[0] = 'S';
+            } else {
+                cancelada[0] = 'N';
+            }
+            notaBean.setCancelada(cancelada);
+            notaDAO.inserir(notaBean);
+        } catch (SQLException ex) {
+            Logger.getLogger(ItensGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        limparCampos();
+        model.addRow(notaBean);
+    }//GEN-LAST:event_btnEmitirActionPerformed
+
+    private void txtDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataKeyPressed
+
+    }//GEN-LAST:event_txtDataKeyPressed
+
+    private void txtDataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbCancelada.requestFocus();
+        }
+        validaData();
+    }//GEN-LAST:event_txtDataKeyReleased
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        NotaFiscalBean notaBean = new NotaFiscalBean();
+        try {
+            int codCli = Integer.parseInt(cbClientes.getSelectedItem().toString().split(" - ")[0]);
+            NotaFiscalDAO notaDAO = new NotaFiscalDAO();
+            notaBean.setNumero(txtNumero.getText().toCharArray());
+            notaBean.setSerie(txtSerie.getText().toCharArray());
+            notaBean.setCodCli(codCli);
+            LocalDate data = LocalDate.parse((String) FormataData.BRtoUS(txtData.getText()));
+            notaBean.setData(data);
+            char[] cancelada = new char[1];
+            if (cbCancelada.isSelected()) {
+                cancelada[0] = 'S';
+            } else {
+                cancelada[0] = 'N';
+            }
+            notaBean.setCancelada(cancelada);
+            notaDAO.alterar(notaBean);
+            int linhaSelecionada = jTableNotas.getSelectedRow();
+            if (linhaSelecionada != -1) {
+                model.setValueAt(txtNumero.getText(), linhaSelecionada, 0);
+                model.setValueAt(txtSerie.getText(), linhaSelecionada, 1);
+                model.setValueAt(codCli, linhaSelecionada, 2);
+                model.setValueAt(FormataData.BRtoUS(txtData.getText()), linhaSelecionada, 3);
+                model.setValueAt(String.copyValueOf(cancelada), linhaSelecionada, 4);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItensGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        limparCampos();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void jTableNotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableNotasMouseClicked
+        int linha = jTableNotas.getSelectedRow();
+        limparCampos();
+        txtNumero.setText(jTableNotas.getValueAt(linha, 0).toString());
+        if (jTableNotas.getValueAt(linha, 1) != null) {
+            txtSerie.setText(jTableNotas.getValueAt(linha, 1).toString());
+        }
+        if (jTableNotas.getValueAt(linha, 2) != null) {
+            for (int i = 0; i < cbClientes.getItemCount(); i++) {
+                if (cbClientes.getItemAt(i).split(" - ")[0].equals(jTableNotas.getValueAt(linha, 2).toString())) {
+                    cbClientes.setSelectedIndex(i);
+                }
+            }
+        }
+        txtData.setText(FormataData.UStoBR(jTableNotas.getValueAt(linha, 3).toString()));
+        if (jTableNotas.getValueAt(linha, 4).toString().charAt(0) == 'S') {
+            cbCancelada.setSelected(true);
+        } else {
+            cbCancelada.setSelected(false);
+        }
+        txtNumero.requestFocus();
+    }//GEN-LAST:event_jTableNotasMouseClicked
+
+    private void txtNumeroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtSerie.requestFocus();
+        }
+    }//GEN-LAST:event_txtNumeroKeyPressed
+
+    private void txtSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbClientes.requestFocus();
+        }
+    }//GEN-LAST:event_txtSerieKeyPressed
+
+    private void cbClientesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbClientesItemStateChanged
+        txtData.requestFocus();
+    }//GEN-LAST:event_cbClientesItemStateChanged
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        NotaFiscalDAO notaDAO = new NotaFiscalDAO();
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir " + txtNumero.getText() + "?", "Confirma exclusão?", JOptionPane.YES_NO_OPTION);
+        if (confirma == 0 && !txtNumero.getText().isEmpty()) {
+            try {
+                int linhaSelecionada = jTableNotas.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    notaDAO.excluir(Integer.parseInt(txtNumero.getText()));
+                    model.removeRow(linhaSelecionada);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ItensGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "É NECESSÁRIO SELECIONAR UMA NOTA FISCAL!");
+        }
+        limparCampos();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        NotaFiscalDAO notasDAO = new NotaFiscalDAO();
+        limparModal();
+        if (txtNumero.getText().isEmpty() && txtSerie.getText().isEmpty() && (cbClientes.getSelectedIndex() == 0) && txtData.getText().isEmpty()) {
+            char[] cancelada = new char[1];
+            if (cbCancelada.isSelected()) {
+                cancelada[0] = 'S';
+                try {
+                    for (NotaFiscalBean nota : notasDAO.pesquisarPorCanceladas(cancelada)) {
+                        model.addRow(nota);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(NotasGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                cancelada[0] = 'N';
+                try {
+                    for (NotaFiscalBean nota : notasDAO.pesquisarPorCanceladas(cancelada)) {
+                        model.addRow(nota);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(NotasGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            try {
+                if (!txtNumero.getText().isEmpty()) {
+                    for (NotaFiscalBean nota : notasDAO.pesquisarPorNumero(txtNumero.getText().toCharArray())) {
+                        model.addRow(nota);
+                    }
+                    return;
+                }
+
+                if (!txtSerie.getText().isEmpty()) {
+                    for (NotaFiscalBean nota : notasDAO.pesquisarPorSerie(txtSerie.getText().toCharArray())) {
+                        model.addRow(nota);
+                    }
+                    return;
+                }
+
+                if (cbClientes.getSelectedIndex() > 0) {
+                    int codCli = Integer.parseInt(cbClientes.getSelectedItem().toString().split(" - ")[0]);
+                    notasDAO.pesquisarPorCliente(codCli).forEach((nota) -> {
+                        model.addRow(nota);
+                    });
+                    return;
+                }
+                
+                if (!txtData.getText().isEmpty() && txtData.isValid()) {
+                    for (NotaFiscalBean nota : notasDAO.pesquisarPorData(FormataData.BRtoUS(txtData.getText()))) {
+                        model.addRow(nota);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(NotasGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void txtDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataFocusLost
+    }//GEN-LAST:event_txtDataFocusLost
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparCampos();
+        preencherTable();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,26 +609,31 @@ public class NotasGUI extends javax.swing.JFrame {
 
     private void preencherTable() {
         NotaFiscalDAO notasDAO = new NotaFiscalDAO();
-
+        limparModal();
         try {
             for (NotaFiscalBean nota : notasDAO.listarTodos()) {
                 model.addRow(nota);
             }
+            jTableNotas.getColumnModel().getColumn(3).setCellRenderer(new DefaultCellRenderer());
         } catch (SQLException ex) {
             Logger.getLogger(NotasGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnEmitir;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox cbCancelada;
+    private javax.swing.JComboBox<String> cbClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -393,13 +647,47 @@ public class NotasGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTableNotas;
     private javax.swing.JMenuItem menuSair;
-    private javax.swing.JRadioButton rbAtivas;
-    private javax.swing.JRadioButton rbCanceladas;
-    private javax.swing.JRadioButton rbTodas;
-    private javax.swing.JTextField txtCliente;
-    private javax.swing.JFormattedTextField txtDataFinal;
-    private javax.swing.JFormattedTextField txtDataInicial;
+    private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtSerie;
     // End of variables declaration//GEN-END:variables
+
+    private void preencherCbClientes() {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        try {
+            for (ClienteBean cliente : clienteDAO.listarTodos()) {
+                cbClientes.addItem(cliente.toString());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItensGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cbClientes.setSelectedIndex(0);
+    }
+
+    private void limparCampos() {
+        txtNumero.setText("");
+        txtSerie.setText("");
+        cbClientes.setSelectedIndex(0);
+        txtData.setText("");
+        cbCancelada.setSelected(false);
+    }
+
+    private void validaData() {
+        String[] array = txtData.getText().split("");
+        if (array.length == 2) {
+            txtData.setText(txtData.getText() + "/");
+        }
+        if (array.length == 5) {
+            txtData.setText(txtData.getText() + "/");
+        }
+        if (array.length > 9) {
+            cbCancelada.requestFocus();
+        }
+    }
+
+    private void limparModal() {
+        for (int i = model.getRowCount() - 1; i > -1; i--) {
+            model.removeRow(i);
+        }
+    }
 }

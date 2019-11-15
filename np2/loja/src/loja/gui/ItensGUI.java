@@ -624,6 +624,7 @@ public class ItensGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ItensGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        cbPneu.setSelectedIndex(0);
     }
 
     private void verificarCampos() {
@@ -647,7 +648,7 @@ public class ItensGUI extends javax.swing.JFrame {
         txtItem.setEnabled(false);
         txtQtde.setText("");
         txtPreco.setText("");
-        cbPneu.setSelectedIndex(-1);
+        cbPneu.setSelectedIndex(0);
         txtQtde.requestFocus();
     }
 

@@ -6,6 +6,9 @@
 package loja.gui;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 import loja.banco.Conexao;
@@ -37,6 +40,7 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,6 +54,14 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
         btnAtualizar = new javax.swing.JButton();
         txtSENHA = new javax.swing.JPasswordField();
         btnTestar = new javax.swing.JButton();
+        cbTimezone = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        btnCriar = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
+
+        jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,14 +91,19 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
             }
         });
 
+        cbTimezone.setText("Usar \"?useTimezone=true&serverTimezone=UTC\"");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cbTimezone))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
@@ -107,9 +124,9 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtUSUARIO)
                                     .addComponent(txtSENHA)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnTestar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAtualizar)))
                 .addContainerGap())
         );
@@ -136,10 +153,64 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtSENHA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbTimezone)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAtualizar)
                     .addComponent(btnTestar))
+                .addContainerGap())
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Criar banco em localhost"));
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Antes de executar, certifique-se de ter um banco mysql ou mariadb com os seguintes requisitos:\nhost: localhost\nporta: 3306\nusuario: lojaLocal\nsenha: loja\nObs: Marque a opção ao lado Usar \"?useTimezone=true&serverTimezone=UTC\" caso seu banco use timezone UTC");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setOpaque(false);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        btnCriar.setText("Criar banco e tabelas");
+        btnCriar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarActionPerformed(evt);
+            }
+        });
+
+        btnInserir.setText("Inserir dados de exemplo");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCriar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInserir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCriar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -149,15 +220,19 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,11 +241,15 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         Conexao.setHOST(txtHOST.getText());
         Conexao.setPORTA(txtPORTA.getText());
-        Conexao.setBANCO(txtBANCO.getText());
+        if (cbTimezone.isSelected()) {
+            Conexao.setBANCO(txtBANCO.getText() + "?useTimezone=true&serverTimezone=UTC");
+        } else {
+            Conexao.setBANCO(txtBANCO.getText());
+        }
         Conexao.setUSER(txtUSUARIO.getText());
         String senhaSanitizada = Arrays.toString(txtSENHA.getPassword());
         senhaSanitizada = senhaSanitizada.replace(", ", "");
-        senhaSanitizada = senhaSanitizada.substring(1, senhaSanitizada.length()-1);
+        senhaSanitizada = senhaSanitizada.substring(1, senhaSanitizada.length() - 1);
         System.out.println(senhaSanitizada);
         Conexao.setPASS(senhaSanitizada);
         NotasGUI notaGUI = new NotasGUI();
@@ -184,6 +263,146 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Conexão efetuada com sucesso!");
         Conexao.fecharConexao(con);
     }//GEN-LAST:event_btnTestarActionPerformed
+
+    private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
+        String URL = "jdbc:mysql://127.0.0.1:3306";
+        if (cbTimezone.isSelected()) {
+            URL += "?useTimezone=true&serverTimezone=UTC";
+        }
+        String USER = "lojaLocal";
+        String PASS = "loja";
+        try {
+            Connection con = DriverManager.getConnection(URL, USER, PASS);
+            String sql = "create database if not exists lojaLocal;";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "CREATE TABLE if not exists lojaLocal.clientes (\n"
+                    + "  codCli int(11) AUTO_INCREMENT,\n"
+                    + "  nome varchar(50) DEFAULT NULL,\n"
+                    + "  endereco varchar(60) DEFAULT NULL,\n"
+                    + "  estado char(2) DEFAULT NULL,\n"
+                    + "  PRIMARY KEY (codCli)\n"
+                    + ");";
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "CREATE TABLE if not exists lojaLocal.pneus (\n"
+                    + "  codPneu int(11) AUTO_INCREMENT,\n"
+                    + "  descricao varchar(50) DEFAULT NULL,\n"
+                    + "  medidas varchar(15) DEFAULT NULL,\n"
+                    + "  preco decimal(10,2) NOT NULL,\n"
+                    + "  ativo char(1) NOT NULL,\n"
+                    + "  PRIMARY KEY (codPneu)\n"
+                    + ")";
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "CREATE TABLE if not exists lojaLocal.notaFiscal (\n"
+                    + "  numero char(9) NOT NULL,\n"
+                    + "  serie char(3) NOT NULL,\n"
+                    + "  codCli int(11) NOT NULL,\n"
+                    + "  data date NOT NULL,\n"
+                    + "  cancelada char(1) NOT NULL,\n"
+                    + "  PRIMARY KEY (numero,serie),\n"
+                    + "  KEY FK_CLIENTES (codCli),\n"
+                    + "  CONSTRAINT fk_notaFiscal_clientes FOREIGN KEY (codCli) REFERENCES clientes (codCli)\n"
+                    + ")";
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "CREATE TABLE if not exists lojaLocal.itens (\n"
+                    + "  numero char(9) NOT NULL,\n"
+                    + "  serie char(3) NOT NULL,\n"
+                    + "  item smallint(6) NOT NULL,\n"
+                    + "  codPneu int(11) NOT NULL,\n"
+                    + "  qtde smallint(6) NOT NULL,\n"
+                    + "  preco decimal(10,2) NOT NULL,\n"
+                    + "  PRIMARY KEY (item,numero,serie),\n"
+                    + "  KEY FK_PNEUS (codPneu),\n"
+                    + "  KEY FK_NOTAS (numero,serie),\n"
+                    + "  CONSTRAINT FK_NOTAS FOREIGN KEY (numero, serie) REFERENCES notaFiscal (numero, serie),\n"
+                    + "  CONSTRAINT FK_PNEUS FOREIGN KEY (codPneu) REFERENCES pneus (codPneu)\n"
+                    + ");";
+            st.executeUpdate(sql);
+            st.close();
+            con.close();
+
+            txtHOST.setText("127.0.0.1");
+            txtHOST.setEnabled(false);
+            txtPORTA.setText("3306");
+            txtPORTA.setEnabled(false);
+            txtBANCO.setText("lojaLocal");
+            txtBANCO.setEnabled(false);
+            txtUSUARIO.setText("lojaLocal");
+            txtUSUARIO.setEnabled(false);
+            txtSENHA.setText("loja");
+            txtSENHA.setEnabled(false);
+            JOptionPane.showMessageDialog(null, "BANCO CRIADO COM SUCESSO!");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnCriarActionPerformed
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        String URL = "jdbc:mysql://127.0.0.1:3306";
+        if (cbTimezone.isSelected()) {
+            URL += "?useTimezone=true&serverTimezone=UTC";
+        }
+        String USER = "lojaLocal";
+        String PASS = "loja";
+        try {
+            Connection con = DriverManager.getConnection(URL, USER, PASS);
+            String sql = "INSERT INTO lojaLocal.clientes VALUES \n"
+                    + "(1,'Gumercindo','Rua 15, 2150','SP'),\n"
+                    + "(2,'Joaquim Jose','Rua Tiradentes, 50','SP'),\n"
+                    + "(3,'Joana Darc','Rua dos Martires, 1500','RJ'),\n"
+                    + "(4,'Maria Beatriz endereço','Rua Ipanema, 230','RJ');";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "INSERT INTO lojaLocal.pneus VALUES \n"
+                    + "(1,'pneu comum','aro 13',135.00,'S'),\n"
+                    + "(2,'pneu comum','aro 14',240.00,'S'),\n"
+                    + "(3,'pneu trator dianteiro',NULL,1200.00,'S'),\n"
+                    + "(4,'pneu trator traseiro',NULL,3500.00,'S'),\n"
+                    + "(5,'pneu comum','aro 15',314.00,'S'),\n"
+                    + "(6,'pneu comum','aro 13',135.00,'S'),\n"
+                    + "(7,'pneu comum','aro 14',240.00,'S'),\n"
+                    + "(8,'pneu trator dianteiro',NULL,1200.00,'S'),\n"
+                    + "(9,'pneu trator traseiro',NULL,3500.00,'S'),\n"
+                    + "(10,'pneu comum','aro 15',314.00,'S');";
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "INSERT INTO lojaLocal.notaFiscal VALUES \n"
+                    + "('1','001',2,'2018-07-15','N'),\n"
+                    + "('2','001',4,'2018-03-16','N'),\n"
+                    + "('3','001',1,'2018-06-20','N'),\n"
+                    + "('4','001',4,'2018-08-25','N');";
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            sql = "INSERT INTO lojaLocal.itens VALUES \n"
+                    + "('1','001',1,3,2,1200.00),\n"
+                    + "('2','001',1,1,4,135.00),\n"
+                    + "('3','001',1,1,4,135.00),\n"
+                    + "('4','001',1,2,8,240.00),\n"
+                    + "('1','001',2,4,2,3500.00),\n"
+                    + "('2','001',2,2,4,240.00);";
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+            con.close();
+
+            txtHOST.setText("127.0.0.1");
+            txtHOST.setEnabled(false);
+            txtPORTA.setText("3306");
+            txtPORTA.setEnabled(false);
+            txtBANCO.setText("lojaLocal");
+            txtBANCO.setEnabled(false);
+            txtUSUARIO.setText("lojaLocal");
+            txtUSUARIO.setEnabled(false);
+            txtSENHA.setText("loja");
+            txtSENHA.setEnabled(false);
+            JOptionPane.showMessageDialog(null, "DADOS INSERIDOS COM SUCESSO! \n CLIQUE EM ATUALIZAR NA TELA AO LADO PARA CONECTAR AO NOVO BANCO.");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnInserirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,13 +441,20 @@ public class ConfiguracoesGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnCriar;
+    private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnTestar;
+    private javax.swing.JCheckBox cbTimezone;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txtBANCO;
     private javax.swing.JTextField txtHOST;
     private javax.swing.JTextField txtPORTA;

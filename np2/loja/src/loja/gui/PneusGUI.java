@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import loja.banco.tabelas.pneus.PneuBean;
 import loja.banco.tabelas.pneus.PneuDAO;
 import loja.table_model.PneusTableModel;
+import loja.table_model.renderer.DefaultCellRenderer;
 
 /**
  *
@@ -434,6 +435,7 @@ public class PneusGUI extends javax.swing.JFrame {
             model.setValueAt(txtDescricao.getText(), linhaSelecionada, 1);
             model.setValueAt(txtMedidas.getText(), linhaSelecionada, 2);
             model.setValueAt(txtPreco.getText().replace(",", "."), linhaSelecionada, 3);
+            model.setValueAt(ativo[0], linhaSelecionada, 4);
         }
         limparCampos();
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -482,8 +484,7 @@ public class PneusGUI extends javax.swing.JFrame {
             txtMedidas.setText(jTablePneus.getValueAt(linha, 2).toString());
         }
         txtPreco.setText(jTablePneus.getValueAt(linha, 3).toString());
-        cbAtivo.setSelected(true);
-        if (jTablePneus.getValueAt(linha, 4).toString() == "S") {
+        if (jTablePneus.getValueAt(linha, 4).toString().charAt(0) == 'S') {
             cbAtivo.setSelected(true);
         } else {
             cbAtivo.setSelected(false);
@@ -589,6 +590,7 @@ public class PneusGUI extends javax.swing.JFrame {
         try {
             for (PneuBean pneu : pneuDAO.listarTodos()) {
                 model.addRow(pneu);
+                jTablePneus.getColumnModel().getColumn(3).setCellRenderer(new DefaultCellRenderer());
             }
         } catch (SQLException ex) {
             Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);

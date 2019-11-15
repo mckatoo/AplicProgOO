@@ -1,15 +1,16 @@
 package loja.banco.tabelas.notas;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * ClienteBean
  */
 public class NotaFiscalBean {
+
     private char[] numero;
     private char[] serie;
     private int codCli;
-    private Date data;
+    private LocalDate data;
     private char[] cancelada;
 
     public char[] getNumero() {
@@ -36,11 +37,11 @@ public class NotaFiscalBean {
         this.codCli = codCli;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
@@ -51,6 +52,5 @@ public class NotaFiscalBean {
     public void setCancelada(char[] cancelada) {
         this.cancelada = cancelada;
     }
-    
-    
+
 }

@@ -13,7 +13,6 @@ import java.util.logging.Logger;
  */
 public class Conexao {
 
-//    private static String HOST = "10.201.84.10";
     private static String HOST = "campus1-iesi.ddns.net";
     private static String PORTA = "9005";
     private static String BANCO = "lojaServer";
