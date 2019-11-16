@@ -66,7 +66,7 @@ public class PneusTableModel extends AbstractTableModel {
                 dados.get(rowIndex).setMedidas((String) aValue);
                 break;
             case 3: 
-                dados.get(rowIndex).setPreco((BigDecimal) aValue);
+                dados.get(rowIndex).setPreco(new BigDecimal((String) aValue));
                 break;
             case 4: 
                 dados.get(rowIndex).setAtivo(((String) aValue).toCharArray());

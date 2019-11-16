@@ -460,8 +460,8 @@ public class PneusGUI extends javax.swing.JFrame {
             model.setValueAt(txtCodigo.getText(), linhaSelecionada, 0);
             model.setValueAt(txtDescricao.getText(), linhaSelecionada, 1);
             model.setValueAt(txtMedidas.getText(), linhaSelecionada, 2);
-            model.setValueAt(txtPreco.getText().replace(",", "."), linhaSelecionada, 3);
-            model.setValueAt(ativo[0], linhaSelecionada, 4);
+            model.setValueAt(txtPreco.getText(), linhaSelecionada, 3);
+            model.setValueAt(String.copyValueOf(ativo), linhaSelecionada, 4);
         }
         limparCampos();
     }//GEN-LAST:event_btnAlterarActionPerformed
