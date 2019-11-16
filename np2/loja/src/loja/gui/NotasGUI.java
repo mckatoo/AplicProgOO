@@ -5,12 +5,15 @@
  */
 package loja.gui;
 
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import loja.banco.tabelas.clientes.ClienteBean;
 import loja.banco.tabelas.clientes.ClienteDAO;
 import loja.banco.tabelas.notas.NotaFiscalBean;
@@ -84,6 +87,7 @@ public class NotasGUI extends javax.swing.JFrame {
 
         btnPesquisar.setBackground(new java.awt.Color(204, 204, 204));
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.setEnabled(false);
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarActionPerformed(evt);
@@ -163,12 +167,18 @@ public class NotasGUI extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNumeroKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyReleased(evt);
+            }
         });
 
         txtSerie.setNextFocusableComponent(cbClientes);
         txtSerie.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSerieKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSerieKeyReleased(evt);
             }
         });
 
@@ -199,6 +209,11 @@ public class NotasGUI extends javax.swing.JFrame {
 
         cbCancelada.setText("Cancelada");
         cbCancelada.setNextFocusableComponent(btnPesquisar);
+        cbCancelada.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCanceladaItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setText("Data:");
 
@@ -413,6 +428,7 @@ public class NotasGUI extends javax.swing.JFrame {
             cbCancelada.requestFocus();
         }
         validaData();
+        habilitarPesquisa();
     }//GEN-LAST:event_txtDataKeyReleased
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -471,19 +487,16 @@ public class NotasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableNotasMouseClicked
 
     private void txtNumeroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtSerie.requestFocus();
-        }
+        
     }//GEN-LAST:event_txtNumeroKeyPressed
 
     private void txtSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbClientes.requestFocus();
-        }
+        
     }//GEN-LAST:event_txtSerieKeyPressed
 
     private void cbClientesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbClientesItemStateChanged
         txtData.requestFocus();
+        habilitarPesquisa();
     }//GEN-LAST:event_cbClientesItemStateChanged
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -552,7 +565,7 @@ public class NotasGUI extends javax.swing.JFrame {
                     });
                     return;
                 }
-                
+
                 if (!txtData.getText().isEmpty() && txtData.isValid()) {
                     for (NotaFiscalBean nota : notasDAO.pesquisarPorData(FormataData.BRtoUS(txtData.getText()))) {
                         model.addRow(nota);
@@ -570,7 +583,26 @@ public class NotasGUI extends javax.swing.JFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparCampos();
         preencherTable();
+        btnPesquisar.setEnabled(false);
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void cbCanceladaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCanceladaItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCanceladaItemStateChanged
+
+    private void txtNumeroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtSerie.requestFocus();
+        }
+        habilitarPesquisa();
+    }//GEN-LAST:event_txtNumeroKeyReleased
+
+    private void txtSerieKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbClientes.requestFocus();
+        }
+        habilitarPesquisa();
+    }//GEN-LAST:event_txtSerieKeyReleased
 
     /**
      * @param args the command line arguments
@@ -688,6 +720,14 @@ public class NotasGUI extends javax.swing.JFrame {
     private void limparModal() {
         for (int i = model.getRowCount() - 1; i > -1; i--) {
             model.removeRow(i);
+        }
+    }
+
+    private void habilitarPesquisa() {
+        if(!txtNumero.getText().isEmpty() || !txtSerie.getText().isEmpty() || !txtData.getText().isEmpty() || (cbClientes.getSelectedIndex() > 1)){
+            btnPesquisar.setEnabled(true);
+        } else {
+            btnPesquisar.setEnabled(false);
         }
     }
 }

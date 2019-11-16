@@ -108,4 +108,120 @@ public class ClienteDAO {
         return null;
     }
 
+    public List<ClienteBean> pesquisarPorCodigo(String codCli) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from clientes where codCli = ?";
+        ResultSet rs = null;
+        List<ClienteBean> listaClientes = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, codCli);
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ClienteBean cb = new ClienteBean();
+                    cb.setCodCli(rs.getInt("codCli"));
+                    cb.setNome(rs.getString("nome"));
+                    cb.setEndereco(rs.getString("endereco"));
+                    cb.setEstado(rs.getString("estado").toCharArray());
+                    listaClientes.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaClientes;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public Iterable<ClienteBean> pesquisarPorNome(String nome) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from clientes where nome like ?";
+        ResultSet rs = null;
+        List<ClienteBean> listaClientes = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nome + "%");
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ClienteBean cb = new ClienteBean();
+                    cb.setCodCli(rs.getInt("codCli"));
+                    cb.setNome(rs.getString("nome"));
+                    cb.setEndereco(rs.getString("endereco"));
+                    cb.setEstado(rs.getString("estado").toCharArray());
+                    listaClientes.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaClientes;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public Iterable<ClienteBean> pesquisarPorEndereco(String endereco) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from clientes where endereco like ?";
+        ResultSet rs = null;
+        List<ClienteBean> listaClientes = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + endereco + "%");
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ClienteBean cb = new ClienteBean();
+                    cb.setCodCli(rs.getInt("codCli"));
+                    cb.setNome(rs.getString("nome"));
+                    cb.setEndereco(rs.getString("endereco"));
+                    cb.setEstado(rs.getString("estado").toCharArray());
+                    listaClientes.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaClientes;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public Iterable<ClienteBean> pesquisarPorEstado(String estado) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from clientes where estado like ?";
+        ResultSet rs = null;
+        List<ClienteBean> listaClientes = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + estado + "%");
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ClienteBean cb = new ClienteBean();
+                    cb.setCodCli(rs.getInt("codCli"));
+                    cb.setNome(rs.getString("nome"));
+                    cb.setEndereco(rs.getString("endereco"));
+                    cb.setEstado(rs.getString("estado").toCharArray());
+                    listaClientes.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaClientes;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
 }

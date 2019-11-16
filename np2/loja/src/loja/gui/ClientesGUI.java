@@ -57,6 +57,7 @@ public class ClientesGUI extends javax.swing.JFrame {
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableClientes = new javax.swing.JTable();
@@ -88,7 +89,6 @@ public class ClientesGUI extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
         jLabel1.setText("Código");
-        jLabel1.setEnabled(false);
 
         jLabel2.setText("Nome");
 
@@ -105,9 +105,11 @@ public class ClientesGUI extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtEnderecoKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEnderecoKeyReleased(evt);
+            }
         });
 
-        txtCodigo.setEnabled(false);
         txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodigoFocusLost(evt);
@@ -116,6 +118,9 @@ public class ClientesGUI extends javax.swing.JFrame {
         txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCodigoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyReleased(evt);
             }
         });
 
@@ -128,6 +133,9 @@ public class ClientesGUI extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
         });
 
         txtEstado.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -138,6 +146,9 @@ public class ClientesGUI extends javax.swing.JFrame {
         txtEstado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtEstadoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEstadoKeyReleased(evt);
             }
         });
 
@@ -154,7 +165,7 @@ public class ClientesGUI extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addComponent(txtEstado)
                     .addComponent(txtNome)
                     .addComponent(txtCodigo))
@@ -219,6 +230,19 @@ public class ClientesGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPesquisar.setBackground(new java.awt.Color(204, 204, 204));
+        btnPesquisar.setText("Pesquisar | Listar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+        btnPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnPesquisarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -226,23 +250,26 @@ public class ClientesGUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(btnCadastrar)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSair)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -272,7 +299,7 @@ public class ClientesGUI extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 197, Short.MAX_VALUE)
+            .addGap(0, 191, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
         );
@@ -461,10 +488,7 @@ public class ClientesGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableClientesMouseClicked
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        verificarCampos();
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtEndereco.requestFocus();
-        }
+
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void txtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyPressed
@@ -475,19 +499,11 @@ public class ClientesGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoKeyPressed
 
     private void txtEnderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyPressed
-        verificarCampos();
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtEstado.requestFocus();
-        }
+
     }//GEN-LAST:event_txtEnderecoKeyPressed
 
     private void txtEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyPressed
-        verificarCampos();
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER && txtCodigo.isEnabled()) {
-            btnAlterar.doClick();
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btnCadastrar.doClick();
-        }
+
     }//GEN-LAST:event_txtEstadoKeyPressed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -498,17 +514,83 @@ public class ClientesGUI extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         PneusGUI pneuGUI = new PneusGUI();
-//        pneuGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pneuGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         ItensGUI itemGUI = new ItensGUI();
-//        itemGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         itemGUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        ClienteDAO clienteDAO = new ClienteDAO();
+
+        limparModal();
+        if (txtCodigo.getText().isEmpty() && txtNome.getText().isEmpty() && txtEndereco.getText().isEmpty() && txtEstado.getText().isEmpty()) {
+            preencherTable();
+        } else {
+            if (!txtCodigo.getText().isEmpty()) {
+                for (ClienteBean cliente : clienteDAO.pesquisarPorCodigo(txtCodigo.getText())) {
+                    model.addRow(cliente);
+                }
+                limparCampos();
+                return;
+            } else if (!txtNome.getText().isEmpty()) {
+                for (ClienteBean cliente : clienteDAO.pesquisarPorNome(txtNome.getText())) {
+                    model.addRow(cliente);
+                }
+                limparCampos();
+                return;
+            } else if (!txtEndereco.getText().isEmpty()) {
+                for (ClienteBean cliente : clienteDAO.pesquisarPorEndereco(txtEndereco.getText())) {
+                    model.addRow(cliente);
+                }
+                limparCampos();
+                return;
+            } else if (!txtEstado.getText().isEmpty()) {
+                for (ClienteBean cliente : clienteDAO.pesquisarPorEstado(txtEstado.getText())) {
+                    model.addRow(cliente);
+                }
+                limparCampos();
+            }
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnPesquisarKeyReleased
+
+    }//GEN-LAST:event_btnPesquisarKeyReleased
+
+    private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
+        verificarCampos();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtNome.requestFocus();
+        }
+    }//GEN-LAST:event_txtCodigoKeyReleased
+
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+        verificarCampos();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtEndereco.requestFocus();
+        }
+    }//GEN-LAST:event_txtNomeKeyReleased
+
+    private void txtEnderecoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyReleased
+        verificarCampos();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtEstado.requestFocus();
+        }
+    }//GEN-LAST:event_txtEnderecoKeyReleased
+
+    private void txtEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyReleased
+        verificarCampos();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER && txtCodigo.isEnabled()) {
+            btnAlterar.doClick();
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnCadastrar.doClick();
+        }
+    }//GEN-LAST:event_txtEstadoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -545,13 +627,19 @@ public class ClientesGUI extends javax.swing.JFrame {
 
     private void preencherTable() {
         ClienteDAO clienteDAO = new ClienteDAO();
-
+        limparModal();
         try {
             for (ClienteBean cliente : clienteDAO.listarTodos()) {
                 model.addRow(cliente);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClientesGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void limparModal() {
+        for (int i = model.getRowCount() - 1; i > -1; i--) {
+            model.removeRow(i);
         }
     }
 
@@ -575,7 +663,6 @@ public class ClientesGUI extends javax.swing.JFrame {
 
     private void limparCampos() {
         txtCodigo.setText("");
-        txtCodigo.setEnabled(false);
         txtNome.setText("");
         txtEndereco.setText("");
         txtEstado.setText("");
@@ -586,6 +673,7 @@ public class ClientesGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
