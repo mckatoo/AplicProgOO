@@ -1,5 +1,6 @@
 package loja.banco.tabelas.pneus;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,6 +99,161 @@ public class PneuDAO {
                     cb.setDescricao(rs.getString("descricao"));
                     cb.setMedidas(rs.getString("medidas"));
                     cb.setPreco(rs.getBigDecimal("preco"));
+                    cb.setAtivo(rs.getString("ativo").toCharArray());
+                    listaPneus.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaPneus;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<PneuBean> pesquisarPorCodigo(String codPneu) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from pneus where codPneu = ?";
+        ResultSet rs = null;
+        List<PneuBean> listaPneus = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, codPneu);
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    PneuBean cb = new PneuBean();
+                    cb.setCodPneu(rs.getInt("codPneu"));
+                    cb.setDescricao(rs.getString("descricao"));
+                    cb.setMedidas(rs.getString("medidas"));
+                    cb.setPreco(new BigDecimal(rs.getString("preco")));
+                    cb.setAtivo(rs.getString("ativo").toCharArray());
+                    listaPneus.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaPneus;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<PneuBean> pesquisarPorDescricao(String descricao) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from pneus where descricao like ?";
+        ResultSet rs = null;
+        List<PneuBean> listaPneus = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + descricao + "%");
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    PneuBean cb = new PneuBean();
+                    cb.setCodPneu(rs.getInt("codPneu"));
+                    cb.setDescricao(rs.getString("descricao"));
+                    cb.setMedidas(rs.getString("medidas"));
+                    cb.setPreco(new BigDecimal(rs.getString("preco")));
+                    cb.setAtivo(rs.getString("ativo").toCharArray());
+                    listaPneus.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaPneus;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<PneuBean> pesquisarPorMedidas(String medidas) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from pneus where medidas like ?";
+        ResultSet rs = null;
+        List<PneuBean> listaPneus = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + medidas + "%");
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    PneuBean cb = new PneuBean();
+                    cb.setCodPneu(rs.getInt("codPneu"));
+                    cb.setDescricao(rs.getString("descricao"));
+                    cb.setMedidas(rs.getString("medidas"));
+                    cb.setPreco(new BigDecimal(rs.getString("preco")));
+                    cb.setAtivo(rs.getString("ativo").toCharArray());
+                    listaPneus.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaPneus;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<PneuBean> pesquisarPorPreco(String preco) {
+        preco = preco.replace(",", ".");
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from pneus where preco = ?";
+        ResultSet rs = null;
+        List<PneuBean> listaPneus = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, preco);
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    PneuBean cb = new PneuBean();
+                    cb.setCodPneu(rs.getInt("codPneu"));
+                    cb.setDescricao(rs.getString("descricao"));
+                    cb.setMedidas(rs.getString("medidas"));
+                    cb.setPreco(new BigDecimal(rs.getString("preco")));
+                    cb.setAtivo(rs.getString("ativo").toCharArray());
+                    listaPneus.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaPneus;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<PneuBean> pesquisarPorAtivo(boolean ativo) {
+        String ativoString = "N";
+        if (ativo) {
+            ativoString = "S";
+        }
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from pneus where ativo = ?";
+        ResultSet rs = null;
+        List<PneuBean> listaPneus = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ativoString);
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    PneuBean cb = new PneuBean();
+                    cb.setCodPneu(rs.getInt("codPneu"));
+                    cb.setDescricao(rs.getString("descricao"));
+                    cb.setMedidas(rs.getString("medidas"));
+                    cb.setPreco(new BigDecimal(rs.getString("preco")));
                     cb.setAtivo(rs.getString("ativo").toCharArray());
                     listaPneus.add(cb);
                 }

@@ -137,7 +137,7 @@ public class ClienteDAO {
         return null;
     }
 
-    public Iterable<ClienteBean> pesquisarPorNome(String nome) {
+    public List<ClienteBean> pesquisarPorNome(String nome) {
         Connection con = Conexao.abrirConexao();
         String sql = "select * from clientes where nome like ?";
         ResultSet rs = null;
@@ -166,7 +166,7 @@ public class ClienteDAO {
         return null;
     }
 
-    public Iterable<ClienteBean> pesquisarPorEndereco(String endereco) {
+    public List<ClienteBean> pesquisarPorEndereco(String endereco) {
         Connection con = Conexao.abrirConexao();
         String sql = "select * from clientes where endereco like ?";
         ResultSet rs = null;
@@ -195,7 +195,7 @@ public class ClienteDAO {
         return null;
     }
 
-    public Iterable<ClienteBean> pesquisarPorEstado(String estado) {
+    public List<ClienteBean> pesquisarPorEstado(String estado) {
         Connection con = Conexao.abrirConexao();
         String sql = "select * from clientes where estado like ?";
         ResultSet rs = null;

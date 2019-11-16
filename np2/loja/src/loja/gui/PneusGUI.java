@@ -60,6 +60,8 @@ public class PneusGUI extends javax.swing.JFrame {
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePneus = new javax.swing.JTable();
@@ -91,7 +93,6 @@ public class PneusGUI extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Pneus"));
 
         jLabel1.setText("Código");
-        jLabel1.setEnabled(false);
 
         jLabel2.setText("Descrição");
 
@@ -110,7 +111,6 @@ public class PneusGUI extends javax.swing.JFrame {
             }
         });
 
-        txtCodigo.setEnabled(false);
         txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodigoFocusLost(evt);
@@ -135,7 +135,7 @@ public class PneusGUI extends javax.swing.JFrame {
 
         cbAtivo.setText("Ativo");
 
-        txtPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        txtPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
         txtPreco.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPrecoFocusLost(evt);
@@ -163,10 +163,10 @@ public class PneusGUI extends javax.swing.JFrame {
                     .addComponent(txtMedidas)
                     .addComponent(txtDescricao)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbAtivo)
+                        .addGap(0, 251, Short.MAX_VALUE))
                     .addComponent(txtPreco))
                 .addContainerGap())
         );
@@ -230,6 +230,22 @@ public class PneusGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPesquisar.setBackground(new java.awt.Color(204, 204, 204));
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setBackground(new java.awt.Color(204, 204, 204));
+        btnLimpar.setText("Limpar | Listar Todos");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -237,23 +253,29 @@ public class PneusGUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(btnCadastrar)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSair)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -283,7 +305,7 @@ public class PneusGUI extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 189, Short.MAX_VALUE)
+            .addGap(0, 185, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
         );
@@ -395,6 +417,8 @@ public class PneusGUI extends javax.swing.JFrame {
         char[] ativo = new char[1];
         if (cbAtivo.isSelected()) {
             ativo[0] = 'S';
+        } else {
+            ativo[0] = 'N';
         }
         pneuBean.setAtivo(ativo);
         try {
@@ -417,6 +441,8 @@ public class PneusGUI extends javax.swing.JFrame {
         char[] ativo = new char[1];
         if (cbAtivo.isSelected()) {
             ativo[0] = 'S';
+        } else {
+            ativo[0] = 'N';
         }
         pneuBean.setAtivo(ativo);
         try {
@@ -549,6 +575,50 @@ public class PneusGUI extends javax.swing.JFrame {
         verificarCampos();
     }//GEN-LAST:event_txtPrecoFocusLost
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        PneuDAO pneuDAO = new PneuDAO();
+        limparModal();
+        if (txtCodigo.getText().isEmpty() && txtDescricao.getText().isEmpty() && txtMedidas.getText().isEmpty() && txtPreco.getText().isEmpty()) {
+            if (cbAtivo.isSelected()) {
+                for (PneuBean pneu : pneuDAO.pesquisarPorAtivo(cbAtivo.isSelected())) {
+                    model.addRow(pneu);
+                }
+                limparCampos();
+                return;
+            }
+        } else {
+            if (!txtCodigo.getText().isEmpty()) {
+                for (PneuBean pneu : pneuDAO.pesquisarPorCodigo(txtCodigo.getText())) {
+                    model.addRow(pneu);
+                }
+                limparCampos();
+                return;
+            } else if (!txtDescricao.getText().isEmpty()) {
+                for (PneuBean pneu : pneuDAO.pesquisarPorDescricao(txtDescricao.getText())) {
+                    model.addRow(pneu);
+                }
+                limparCampos();
+                return;
+            } else if (!txtMedidas.getText().isEmpty()) {
+                for (PneuBean pneu : pneuDAO.pesquisarPorMedidas(txtMedidas.getText())) {
+                    model.addRow(pneu);
+                }
+                limparCampos();
+                return;
+            } else if (!txtPreco.getText().isEmpty()) {
+                for (PneuBean pneu : pneuDAO.pesquisarPorPreco(txtPreco.getText())) {
+                    model.addRow(pneu);
+                }
+                limparCampos();
+            }
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparCampos();
+        preencherTable();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -586,7 +656,7 @@ public class PneusGUI extends javax.swing.JFrame {
 
     private void preencherTable() {
         PneuDAO pneuDAO = new PneuDAO();
-
+        limparModal();
         try {
             for (PneuBean pneu : pneuDAO.listarTodos()) {
                 model.addRow(pneu);
@@ -594,6 +664,12 @@ public class PneusGUI extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(PneusGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void limparModal() {
+        for (int i = model.getRowCount() - 1; i > -1; i--) {
+            model.removeRow(i);
         }
     }
 
@@ -617,10 +693,10 @@ public class PneusGUI extends javax.swing.JFrame {
 
     private void limparCampos() {
         txtCodigo.setText("");
-        txtCodigo.setEnabled(false);
         txtDescricao.setText("");
         txtMedidas.setText("");
         txtPreco.setText("");
+        cbAtivo.setSelected(false);
         txtDescricao.requestFocus();
     }
 
@@ -628,6 +704,8 @@ public class PneusGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSair;
     private javax.swing.JCheckBox cbAtivo;
     private javax.swing.JLabel jLabel1;
