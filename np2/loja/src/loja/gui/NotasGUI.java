@@ -5,15 +5,12 @@
  */
 package loja.gui;
 
-import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import loja.banco.tabelas.clientes.ClienteBean;
 import loja.banco.tabelas.clientes.ClienteDAO;
 import loja.banco.tabelas.notas.NotaFiscalBean;
@@ -79,6 +76,7 @@ public class NotasGUI extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("NOTAS FISCAIS");
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Notas Fiscais"));
@@ -632,10 +630,8 @@ public class NotasGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NotasGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new NotasGUI().setVisible(true);
         });
     }
 
@@ -700,7 +696,7 @@ public class NotasGUI extends javax.swing.JFrame {
         txtNumero.setText("");
         txtSerie.setText("");
         cbClientes.setSelectedIndex(0);
-        txtData.setText("");
+        txtData.setText(null);
         cbCancelada.setSelected(false);
     }
 

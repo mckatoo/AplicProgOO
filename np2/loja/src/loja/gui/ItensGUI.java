@@ -16,6 +16,7 @@ import loja.banco.tabelas.itens.ItemDAO;
 import loja.banco.tabelas.pneus.PneuBean;
 import loja.banco.tabelas.pneus.PneuDAO;
 import loja.table_model.ItensTableModel;
+import loja.uteis.FormataData;
 
 /**
  *
@@ -24,7 +25,7 @@ import loja.table_model.ItensTableModel;
 public class ItensGUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form NotasGUI
+     * Creates new form ItensGUI
      */
     ItensTableModel model = new ItensTableModel();
 
@@ -65,6 +66,7 @@ public class ItensGUI extends javax.swing.JFrame {
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableItens = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -102,6 +104,7 @@ public class ItensGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Pneu");
 
+        txtItem.setNextFocusableComponent(txtQtde);
         txtItem.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtItemFocusLost(evt);
@@ -113,6 +116,7 @@ public class ItensGUI extends javax.swing.JFrame {
             }
         });
 
+        txtNumero.setNextFocusableComponent(txtSerie);
         txtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNumeroFocusLost(evt);
@@ -124,6 +128,7 @@ public class ItensGUI extends javax.swing.JFrame {
             }
         });
 
+        txtSerie.setNextFocusableComponent(cbPneu);
         txtSerie.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtSerieFocusLost(evt);
@@ -136,6 +141,7 @@ public class ItensGUI extends javax.swing.JFrame {
         });
 
         cbPneu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um pneu" }));
+        cbPneu.setNextFocusableComponent(txtItem);
         cbPneu.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbPneuItemStateChanged(evt);
@@ -150,6 +156,7 @@ public class ItensGUI extends javax.swing.JFrame {
         jLabel5.setText("Qtde");
 
         txtQtde.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtQtde.setNextFocusableComponent(txtPreco);
         txtQtde.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtQtdeFocusLost(evt);
@@ -164,6 +171,7 @@ public class ItensGUI extends javax.swing.JFrame {
         jLabel6.setText("Preço");
 
         txtPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        txtPreco.setNextFocusableComponent(btnCadastrar);
         txtPreco.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPrecoFocusLost(evt);
@@ -264,6 +272,14 @@ public class ItensGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPesquisar.setBackground(new java.awt.Color(204, 204, 204));
+        btnPesquisar.setText("Pesquisar | Listar Todos");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -274,20 +290,23 @@ public class ItensGUI extends javax.swing.JFrame {
                     .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(btnCadastrar)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSair)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -554,7 +573,7 @@ public class ItensGUI extends javax.swing.JFrame {
 
     private void cbPneuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPneuItemStateChanged
         verificarCampos();
-        txtPreco.requestFocus();
+        txtItem.requestFocus();
     }//GEN-LAST:event_cbPneuItemStateChanged
 
     private void txtPrecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecoKeyPressed
@@ -567,6 +586,57 @@ public class ItensGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtPrecoKeyPressed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        ItemDAO itensDAO = new ItemDAO();
+        limparModal();
+        if (txtNumero.getText().isEmpty() && txtSerie.getText().isEmpty() && (cbPneu.getSelectedIndex() == 0) && txtItem.getText().isEmpty() && txtQtde.getText().isEmpty() && txtPreco.getText().isEmpty()) {
+            preencherTable();
+        } else {
+            if (!txtNumero.getText().isEmpty()) {
+                for (ItemBean item : itensDAO.pesquisarPorNumero(txtNumero.getText().toCharArray())) {
+                    model.addRow(item);
+                }
+                limparCampos();
+                return;
+            }
+            if (!txtSerie.getText().isEmpty()) {
+                for (ItemBean item : itensDAO.pesquisarPorSerie(txtSerie.getText().toCharArray())) {
+                    model.addRow(item);
+                }
+                limparCampos();
+                return;
+            }
+            if (cbPneu.getSelectedIndex() > 0) {
+                int codPneu = Integer.parseInt(cbPneu.getSelectedItem().toString().split(" - ")[0]);
+                itensDAO.pesquisarPorPneu(codPneu).forEach((item) -> {
+                    model.addRow(item);
+                });
+                limparCampos();
+                return;
+            }
+            if (!txtItem.getText().isEmpty() && txtItem.isValid()) {
+                for (ItemBean item : itensDAO.pesquisarPorItem(txtItem.getText())) {
+                    model.addRow(item);
+                }
+                limparCampos();
+                return;
+            }
+            if (!txtQtde.getText().isEmpty() && txtQtde.isValid()) {
+                for (ItemBean item : itensDAO.pesquisarPorQtde(txtQtde.getText())) {
+                    model.addRow(item);
+                }
+                limparCampos();
+                return;
+            }
+            if (!txtPreco.getText().isEmpty() && txtPreco.isValid()) {
+                for (ItemBean item : itensDAO.pesquisarPorPreco(txtPreco.getText())) {
+                    model.addRow(item);
+                }
+                limparCampos();
+            }
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -596,15 +666,14 @@ public class ItensGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ItensGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ItensGUI().setVisible(true);
         });
     }
 
     private void preencherTable() {
         ItemDAO itemDAO = new ItemDAO();
+        limparModal();
 
         try {
             for (ItemBean item : itemDAO.listarTodos()) {
@@ -617,6 +686,7 @@ public class ItensGUI extends javax.swing.JFrame {
 
     private void preencherCbPneus() {
         PneuDAO pneuDAO = new PneuDAO();
+
         try {
             for (PneuBean pneu : pneuDAO.listarTodos()) {
                 cbPneu.addItem(pneu.toString());
@@ -641,21 +711,19 @@ public class ItensGUI extends javax.swing.JFrame {
 
     private void limparCampos() {
         txtNumero.setText("");
-        txtNumero.setEnabled(false);
         txtSerie.setText("");
-        txtSerie.setEnabled(false);
         txtItem.setText("");
-        txtItem.setEnabled(false);
         txtQtde.setText("");
-        txtPreco.setText("");
+        txtPreco.setText(null);
         cbPneu.setSelectedIndex(0);
-        txtQtde.requestFocus();
+        txtNumero.requestFocus();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<Object> cbPneu;
     private javax.swing.JLabel jLabel1;
@@ -685,4 +753,10 @@ public class ItensGUI extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtQtde;
     private javax.swing.JTextField txtSerie;
     // End of variables declaration//GEN-END:variables
+
+    private void limparModal() {
+        for (int i = model.getRowCount() - 1; i > -1; i--) {
+            model.removeRow(i);
+        }
+    }
 }

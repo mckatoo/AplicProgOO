@@ -88,6 +88,7 @@ public class PneusGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PNEUS");
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Pneus"));
@@ -695,7 +696,7 @@ public class PneusGUI extends javax.swing.JFrame {
         txtCodigo.setText("");
         txtDescricao.setText("");
         txtMedidas.setText("");
-        txtPreco.setText("");
+        txtPreco.setText(null);
         cbAtivo.setSelected(false);
         txtDescricao.requestFocus();
     }

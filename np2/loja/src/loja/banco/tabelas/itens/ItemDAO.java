@@ -1,10 +1,12 @@
 package loja.banco.tabelas.itens;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import loja.banco.Conexao;
@@ -103,6 +105,192 @@ public class ItemDAO {
                     item.setQtde(rs.getInt("qtde"));
                     item.setPreco(rs.getBigDecimal("preco"));
                     listaItens.add(item);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaItens;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<ItemBean> pesquisarPorNumero(char[] numero) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from itens where numero = ?";
+        ResultSet rs = null;
+        List<ItemBean> listaItens = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(numero));
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ItemBean notaBean = new ItemBean();
+                    notaBean.setNumero(rs.getString("numero").toCharArray());
+                    notaBean.setSerie(rs.getString("serie").toCharArray());
+                    notaBean.setItem(rs.getInt("item"));
+                    notaBean.setCodPneu(rs.getInt("codPneu"));
+                    notaBean.setQtde(rs.getInt("qtde"));
+                    notaBean.setPreco(new BigDecimal(rs.getString("preco")));
+                    listaItens.add(notaBean);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaItens;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<ItemBean> pesquisarPorSerie(char[] serie) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from itens where serie = ?";
+        ResultSet rs = null;
+        List<ItemBean> listaItens = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(serie));
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ItemBean notaBean = new ItemBean();
+                    notaBean.setNumero(rs.getString("numero").toCharArray());
+                    notaBean.setSerie(rs.getString("serie").toCharArray());
+                    notaBean.setItem(rs.getInt("item"));
+                    notaBean.setCodPneu(rs.getInt("codPneu"));
+                    notaBean.setQtde(rs.getInt("qtde"));
+                    notaBean.setPreco(new BigDecimal(rs.getString("preco")));
+                    listaItens.add(notaBean);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaItens;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<ItemBean> pesquisarPorPneu(int codPneu) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from itens where codPneu = ?";
+        ResultSet rs = null;
+        List<ItemBean> listaItens = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(codPneu));
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ItemBean notaBean = new ItemBean();
+                    notaBean.setNumero(rs.getString("numero").toCharArray());
+                    notaBean.setSerie(rs.getString("serie").toCharArray());
+                    notaBean.setItem(rs.getInt("item"));
+                    notaBean.setCodPneu(rs.getInt("codPneu"));
+                    notaBean.setQtde(rs.getInt("qtde"));
+                    notaBean.setPreco(new BigDecimal(rs.getString("preco")));
+                    listaItens.add(notaBean);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaItens;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<ItemBean> pesquisarPorItem(String item) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from itens where item = ?";
+        ResultSet rs = null;
+        List<ItemBean> listaItens = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(item));
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ItemBean notaBean = new ItemBean();
+                    notaBean.setNumero(rs.getString("numero").toCharArray());
+                    notaBean.setSerie(rs.getString("serie").toCharArray());
+                    notaBean.setItem(rs.getInt("item"));
+                    notaBean.setCodPneu(rs.getInt("codPneu"));
+                    notaBean.setQtde(rs.getInt("qtde"));
+                    notaBean.setPreco(new BigDecimal(rs.getString("preco")));
+                    listaItens.add(notaBean);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaItens;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<ItemBean> pesquisarPorQtde(String qtde) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from itens where qtde = ?";
+        ResultSet rs = null;
+        List<ItemBean> listaItens = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(qtde));
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ItemBean notaBean = new ItemBean();
+                    notaBean.setNumero(rs.getString("numero").toCharArray());
+                    notaBean.setSerie(rs.getString("serie").toCharArray());
+                    notaBean.setItem(rs.getInt("item"));
+                    notaBean.setCodPneu(rs.getInt("codPneu"));
+                    notaBean.setQtde(rs.getInt("qtde"));
+                    notaBean.setPreco(new BigDecimal(rs.getString("preco")));
+                    listaItens.add(notaBean);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaItens;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<ItemBean> pesquisarPorPreco(String preco) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from itens where preco = ?";
+        ResultSet rs = null;
+        List<ItemBean> listaItens = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(preco));
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    ItemBean notaBean = new ItemBean();
+                    notaBean.setNumero(rs.getString("numero").toCharArray());
+                    notaBean.setSerie(rs.getString("serie").toCharArray());
+                    notaBean.setItem(rs.getInt("item"));
+                    notaBean.setCodPneu(rs.getInt("codPneu"));
+                    notaBean.setQtde(rs.getInt("qtde"));
+                    notaBean.setPreco(new BigDecimal(rs.getString("preco")));
+                    listaItens.add(notaBean);
                 }
                 System.out.println("Listado com sucesso!");
                 return listaItens;

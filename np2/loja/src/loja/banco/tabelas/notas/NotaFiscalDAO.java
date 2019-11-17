@@ -125,7 +125,6 @@ public class NotaFiscalDAO {
     public List<NotaFiscalBean> pesquisarPorNumero(char[] numero) throws SQLException {
         Connection con = Conexao.abrirConexao();
         String sql = "select numero, serie, codCli, data, cancelada from notaFiscal where numero = ?";
-//        String sql = "select numero, serie, codCli, date_format(data,'%d-%m-%Y') as data, cancelada from notaFiscal where numero = ?";
         ResultSet rs = null;
         List<NotaFiscalBean> listaNotas = new ArrayList<>();
         try {
@@ -140,9 +139,6 @@ public class NotaFiscalDAO {
                     notaBean.setCodCli(rs.getInt("codCli"));
                     LocalDate data = LocalDate.parse(rs.getString("data"));
                     notaBean.setData(data);
-//                    notaBean.setData(FormataData.UStoBR(data));
-//                    LocalDate data = LocalDate.parse(rs.getString("data"), dataBR);
-//                    notaBean.setData(data);
                     notaBean.setCancelada(rs.getString("cancelada").toCharArray());
                     listaNotas.add(notaBean);
                 }
