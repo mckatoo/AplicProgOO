@@ -7,7 +7,6 @@ package uipacontroleadotantes.gui;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import uipacontroleadotantes.banco.usuarios.UsuariosDAO;
 import uipacontroleadotantes.uteis.Sanitize;
@@ -24,8 +23,7 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() {
         initComponents();
-        ImageIcon imagemTituloJanela = new ImageIcon("/uipacontroleadotantes/assets/logo.jpg");
-        setIconImage(imagemTituloJanela.getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/uipacontroleadotantes/assets/logo.jpg")).getImage());
         this.setLocationRelativeTo(null);
         Color color = new Color(238, 238, 238, 250);
         userIcon.setLocation((this.getWidth() / 2) - (userIcon.getWidth() / 2), 30);
