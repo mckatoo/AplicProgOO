@@ -6,12 +6,7 @@
 package uipacontroleadotantes.gui;
 
 import java.awt.Color;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import uipacontroleadotantes.banco.usuarios.UsuariosBean;
 import uipacontroleadotantes.banco.usuarios.UsuariosDAO;
 import uipacontroleadotantes.uteis.Sanitize;
 import uipacontroleadotantes.uteis.Seguranca;
@@ -45,7 +40,6 @@ public class LoginGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         btnFechar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         userIcon = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -71,7 +65,6 @@ public class LoginGUI extends javax.swing.JFrame {
         btnFechar.setBorder(null);
         btnFechar.setFocusable(false);
         btnFechar.setIconTextGap(0);
-        btnFechar.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFecharActionPerformed(evt);
@@ -79,15 +72,6 @@ public class LoginGUI extends javax.swing.JFrame {
         });
         getContentPane().add(btnFechar);
         btnFechar.setBounds(630, 10, 30, 30);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(150, 110, 94, 25);
 
         userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uipacontroleadotantes/assets/user-branco.png"))); // NOI18N
         userIcon.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -160,9 +144,9 @@ public class LoginGUI extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         UsuariosDAO usuariosDAO = new UsuariosDAO();
-        String senha = Seguranca.criptografar(Sanitize.sanitizar(txtSenha.getPassword()));
-        System.out.println(senha);
-        boolean permitido = usuariosDAO.login(txtUsuario.getText(), senha);
+        String senha = Sanitize.sanitizar(txtSenha.getPassword());
+        String senhaCriptografada = Seguranca.criptografar(senha);
+        boolean permitido = usuariosDAO.login(txtUsuario.getText(), senhaCriptografada);
         if (permitido) {
             System.out.println("PERMITIDO");
         } else {
@@ -173,18 +157,6 @@ public class LoginGUI extends javax.swing.JFrame {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnFecharActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        UsuariosDAO usuariosDAO = new UsuariosDAO();
-        UsuariosBean usuario = new UsuariosBean();
-        usuario.setLogin(txtUsuario.getText());
-        usuario.setSenha(Seguranca.criptografar(Sanitize.sanitizar(txtSenha.getPassword())));
-        try {
-            usuariosDAO.inserir(usuario);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,7 +192,6 @@ public class LoginGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
