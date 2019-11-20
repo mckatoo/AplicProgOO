@@ -84,6 +84,11 @@ public class LoginGUI extends javax.swing.JFrame {
         jLabel2.setText("Usuário:");
 
         txtUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Senha:");
 
@@ -99,6 +104,11 @@ public class LoginGUI extends javax.swing.JFrame {
         });
 
         txtSenha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
+            }
+        });
         txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyReleased(evt);
@@ -172,6 +182,16 @@ public class LoginGUI extends javax.swing.JFrame {
             btnEntrar.doClick();
         }
     }//GEN-LAST:event_txtSenhaKeyReleased
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+        
+    }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtSenha.requestFocus();
+        }
+    }//GEN-LAST:event_txtUsuarioKeyReleased
 
     /**
      * @param args the command line arguments

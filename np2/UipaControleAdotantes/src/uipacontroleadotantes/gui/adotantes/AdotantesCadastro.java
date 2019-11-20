@@ -8,6 +8,7 @@ package uipacontroleadotantes.gui.adotantes;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -73,6 +74,7 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         btnCadastrar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAdotantes = new javax.swing.JTable();
 
@@ -89,6 +91,11 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
         txtNome.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         txtNome.setName(""); // NOI18N
         txtNome.setNextFocusableComponent(txtTelefone);
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
+        });
 
         jLabel2.setText("Telefone:");
 
@@ -139,7 +146,7 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
 
         jLabel11.setText("E-mail:");
 
-        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um Sexo", "Masculino", "Feminino" }));
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um Sexo", "M - Masculino", "F - Feminino" }));
         cbSexo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         cbSexo.setName("cbSexo"); // NOI18N
         cbSexo.setNextFocusableComponent(txtEmail);
@@ -169,30 +176,6 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(65, 65, 65)
-                        .addComponent(txtRG, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtEmail))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(44, 44, 44)
@@ -206,12 +189,37 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCelular))
-                            .addComponent(cbUF, 0, 254, Short.MAX_VALUE)
-                            .addComponent(txtBairro))))
+                            .addComponent(cbUF, 0, 274, Short.MAX_VALUE)
+                            .addComponent(txtBairro)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(65, 65, 65)
+                        .addComponent(txtRG, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmail)))
                 .addGap(17, 17, 17))
         );
         jPanel1Layout.setVerticalGroup(
@@ -276,6 +284,19 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAtualizar.setBackground(new java.awt.Color(255, 51, 102));
+        btnAtualizar.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        btnAtualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        btnAtualizar.setEnabled(false);
+        btnAtualizar.setNextFocusableComponent(btnLimpar);
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -283,6 +304,8 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -293,7 +316,8 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -308,6 +332,11 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
 
             }
         ));
+        tblAdotantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAdotantesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAdotantes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -351,6 +380,7 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparCampos();
+        preencherTable();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -362,11 +392,15 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             adotanteBean.setEndereco(txtEndereco.getText());
             adotanteBean.setBairro(txtBairro.getText());
             adotanteBean.setCidade(txtCidade.getText());
-            adotanteBean.setUF(cbUF.getSelectedItem().toString().split(" - ")[0]);
+            if (cbUF.getSelectedIndex() > 0) {
+                adotanteBean.setUF(cbUF.getSelectedItem().toString().split(" - ")[0]);
+            }
             adotanteBean.setCPF(txtCPF.getText());
             adotanteBean.setRG(txtRG.getText());
-            char[] sexo = cbSexo.getSelectedItem().toString().split("")[0].toCharArray();
-            adotanteBean.setSexo(sexo);
+            if (cbSexo.getSelectedIndex() > 0) {
+                char[] sexo = cbSexo.getSelectedItem().toString().split("")[0].toCharArray();
+                adotanteBean.setSexo(sexo);
+            }
             adotanteBean.setEmail(txtEmail.getText());
 
             AdotantesDAO adotantesDAO = new AdotantesDAO();
@@ -386,8 +420,97 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
         preencherTable();
     }//GEN-LAST:event_formComponentShown
 
+    private void tblAdotantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdotantesMouseClicked
+        if (evt.getClickCount() == 2) {
+            int linha = tblAdotantes.getSelectedRow();
+            limparCampos();
+            txtNome.setText(tblAdotantes.getValueAt(linha, 1).toString());
+            txtTelefone.setText(tblAdotantes.getValueAt(linha, 2).toString());
+            txtCelular.setText(tblAdotantes.getValueAt(linha, 3).toString());
+            txtEndereco.setText(tblAdotantes.getValueAt(linha, 4).toString());
+            txtBairro.setText(tblAdotantes.getValueAt(linha, 5).toString());
+            txtCidade.setText(tblAdotantes.getValueAt(linha, 6).toString());
+            if (tblAdotantes.getValueAt(linha, 7) != null) {
+                for (int i = 0; i < cbUF.getItemCount(); i++) {
+                    if (cbUF.getItemAt(i).split(" - ")[0].equals(tblAdotantes.getValueAt(linha, 7).toString())) {
+                        cbUF.setSelectedIndex(i);
+                    }
+                }
+            }
+            txtCPF.setText(tblAdotantes.getValueAt(linha, 8).toString());
+            txtRG.setText(tblAdotantes.getValueAt(linha, 9).toString());
+            if (tblAdotantes.getValueAt(linha, 10) != null) {
+                for (int i = 0; i < cbSexo.getItemCount(); i++) {
+                    if (cbSexo.getItemAt(i).split(" - ")[0].equals(tblAdotantes.getValueAt(linha, 10).toString())) {
+                        cbSexo.setSelectedIndex(i);
+                    }
+                }
+            }
+            txtEmail.setText(tblAdotantes.getValueAt(linha, 11).toString());
+            txtNome.requestFocus();
+            btnAtualizar.setEnabled(true);
+            btnCadastrar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tblAdotantesMouseClicked
+
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+        txtNome.setText(txtNome.getText().toUpperCase());
+    }//GEN-LAST:event_txtNomeKeyReleased
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        if (verificarCamposObrigatorios()) {
+            AdotantesBean adotanteBean = new AdotantesBean();
+            int linha = tblAdotantes.getSelectedRow();
+            if (linha < 0) {
+                return;
+            }
+            int codAdotante = Integer.parseInt(tblAdotantes.getValueAt(linha, 0).toString());
+            adotanteBean.setCodAdotante(codAdotante);
+            adotanteBean.setNome(txtNome.getText());
+            adotanteBean.setTelefone(txtTelefone.getText());
+            adotanteBean.setCelular(txtCelular.getText());
+            adotanteBean.setEndereco(txtEndereco.getText());
+            adotanteBean.setBairro(txtBairro.getText());
+            adotanteBean.setCidade(txtCidade.getText());
+            if (cbUF.getSelectedIndex() > 0) {
+                adotanteBean.setUF(cbUF.getSelectedItem().toString().split(" - ")[0]);
+            }
+            adotanteBean.setCPF(txtCPF.getText());
+            adotanteBean.setRG(txtRG.getText());
+            if (cbSexo.getSelectedIndex() > 0) {
+                char[] sexo = cbSexo.getSelectedItem().toString().split("")[0].toCharArray();
+                adotanteBean.setSexo(sexo);
+            }
+            adotanteBean.setEmail(txtEmail.getText());
+
+            AdotantesDAO adotantesDAO = new AdotantesDAO();
+
+            try {
+                adotantesDAO.alterar(adotanteBean);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdotantesCadastro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            model.setValueAt(String.valueOf(codAdotante), linha, 0);
+            model.setValueAt(txtNome.getText(), linha, 1);
+            model.setValueAt(txtTelefone.getText(), linha, 2);
+            model.setValueAt(txtCelular.getText(), linha, 3);
+            model.setValueAt(txtEndereco.getText(), linha, 4);
+            model.setValueAt(txtBairro.getText(), linha, 5);
+            model.setValueAt(txtCidade.getText(), linha, 6);
+            model.setValueAt(cbUF.getSelectedItem().toString().split(" - ")[0], linha, 7);
+            model.setValueAt(txtCPF.getText(), linha, 8);
+            model.setValueAt(txtRG.getText(), linha, 9);
+            model.setValueAt(cbSexo.getSelectedItem().toString().split(" - ")[0], linha, 10);
+            model.setValueAt(txtEmail.getText(), linha, 11);
+            
+            limparCampos();
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JComboBox<String> cbSexo;
@@ -431,7 +554,8 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
                 ((JComboBox) c).setSelectedIndex(0);
             }
         }
-        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setEnabled(true);
+        btnAtualizar.setEnabled(false);
     }
 
     private boolean verificarCamposObrigatorios() {
@@ -481,8 +605,8 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             Logger.getLogger(AdotantesCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void limparModel(){
+
+    private void limparModel() {
         for (int i = model.getRowCount() - 1; i > -1; i--) {
             model.removeRow(i);
         }
