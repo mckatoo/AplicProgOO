@@ -6,6 +6,7 @@
 package uipacontroleadotantes.gui;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import uipacontroleadotantes.banco.usuarios.UsuariosDAO;
 import uipacontroleadotantes.uteis.Sanitize;
@@ -22,6 +23,7 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/uipacontroleadotantes/assets/logo.jpg")).getImage());
         this.setLocationRelativeTo(null);
         Color color = new Color(238, 238, 238, 250);
         userIcon.setLocation((this.getWidth() / 2) - (userIcon.getWidth() / 2), 30);
@@ -97,6 +99,11 @@ public class LoginGUI extends javax.swing.JFrame {
         });
 
         txtSenha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -148,7 +155,9 @@ public class LoginGUI extends javax.swing.JFrame {
         String senhaCriptografada = Seguranca.criptografar(senha);
         boolean permitido = usuariosDAO.login(txtUsuario.getText(), senhaCriptografada);
         if (permitido) {
-            System.out.println("PERMITIDO");
+            PrincipalGUI principal = new PrincipalGUI();
+            principal.setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "USUÁRIO OU SENHA INVÁLIDOS!");
         }
@@ -157,6 +166,12 @@ public class LoginGUI extends javax.swing.JFrame {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnEntrar.doClick();
+        }
+    }//GEN-LAST:event_txtSenhaKeyReleased
 
     /**
      * @param args the command line arguments
