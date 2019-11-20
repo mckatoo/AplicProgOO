@@ -5,7 +5,6 @@
  */
 package uipacontroleadotantes.gui;
 
-import javax.swing.JInternalFrame;
 import uipacontroleadotantes.gui.adotantes.AdotantesCadastro;
 
 /**
