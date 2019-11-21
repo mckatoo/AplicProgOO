@@ -5,7 +5,11 @@
  */
 package uipacontroleadotantes.gui;
 
+import javax.swing.JInternalFrame;
 import uipacontroleadotantes.gui.adotantes.AdotantesCadastro;
+import uipacontroleadotantes.gui.animais.AnimaisCadastro;
+import uipacontroleadotantes.gui.animais.VacinasCadastro;
+import uipacontroleadotantes.gui.usuarios.UsuariosCadastro;
 
 /**
  *
@@ -38,8 +42,12 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -84,12 +92,47 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Animais");
+
+        jMenuItem4.setText("Cadastro");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuItem6.setText("Adotar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Vacinas");
+
+        jMenuItem7.setText("Cadastro");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Usuários");
+
+        jMenuItem3.setText("Cadastro");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem3);
+
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Janelas");
@@ -130,6 +173,37 @@ public class PrincipalGUI extends javax.swing.JFrame {
         }
         adotantesCadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        UsuariosCadastro usuariosCadastro = null;
+        if (usuariosCadastro == null) {
+            usuariosCadastro = new UsuariosCadastro();
+            jDesktopPane.add(usuariosCadastro);
+        }
+        usuariosCadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        AnimaisCadastro animaisCadastro = null;
+        if (animaisCadastro == null) {
+            animaisCadastro = new AnimaisCadastro();
+            jDesktopPane.add(animaisCadastro);
+        }
+        animaisCadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        VacinasCadastro vacinas = null;
+        if (vacinas == null) {
+            vacinas = new VacinasCadastro();
+            jDesktopPane.add(vacinas);
+        }
+        vacinas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +246,18 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
+
+    private void abrirJInternalFrame(JInternalFrame frame) {
+        if (frame == null) {
+            frame = new JInternalFrame();
+            jDesktopPane.add(frame);
+        }
+        frame.setVisible(true);
+    }
 }

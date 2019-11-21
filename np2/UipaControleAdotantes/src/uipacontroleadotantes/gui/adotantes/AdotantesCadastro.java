@@ -75,6 +75,8 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
         btnCadastrar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAdotantes = new javax.swing.JTable();
 
@@ -297,6 +299,31 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             }
         });
 
+        btnPesquisar.setBackground(new java.awt.Color(255, 51, 102));
+        btnPesquisar.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        btnPesquisar.setForeground(new java.awt.Color(255, 255, 255));
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        btnPesquisar.setNextFocusableComponent(btnLimpar);
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setBackground(new java.awt.Color(204, 0, 51));
+        btnExcluir.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        btnExcluir.setText("Excluir");
+        btnExcluir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        btnExcluir.setEnabled(false);
+        btnExcluir.setNextFocusableComponent(btnLimpar);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -305,7 +332,11 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -317,7 +348,9 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -449,6 +482,7 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             txtEmail.setText(tblAdotantes.getValueAt(linha, 11).toString());
             txtNome.requestFocus();
             btnAtualizar.setEnabled(true);
+            btnExcluir.setEnabled(true);
             btnCadastrar.setEnabled(false);
         }
     }//GEN-LAST:event_tblAdotantesMouseClicked
@@ -490,7 +524,7 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AdotantesCadastro.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             model.setValueAt(String.valueOf(codAdotante), linha, 0);
             model.setValueAt(txtNome.getText(), linha, 1);
             model.setValueAt(txtTelefone.getText(), linha, 2);
@@ -503,16 +537,47 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
             model.setValueAt(txtRG.getText(), linha, 9);
             model.setValueAt(cbSexo.getSelectedItem().toString().split(" - ")[0], linha, 10);
             model.setValueAt(txtEmail.getText(), linha, 11);
-            
+
             limparCampos();
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        AdotantesDAO adotantesDAO = new AdotantesDAO();
+        limparModel();
+        if (!txtNome.getText().equals("")) {
+            adotantesDAO.pesquisarPorNome(txtNome.getText()).forEach((adotantes) -> {
+                model.addRow(adotantes);
+            });
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = tblAdotantes.getSelectedRow();
+        int codAdotante = Integer.parseInt(tblAdotantes.getValueAt(linha, 0).toString());
+        String nome = tblAdotantes.getValueAt(linha, 1).toString();
+        if (codAdotante > 0) {
+            int permissao = JOptionPane.showConfirmDialog(null, "TEM CERTEZA QUE DESEJA APAGAR O ADOTANTE " + nome + "?", "EXCLUIR?", JOptionPane.YES_NO_OPTION);
+            if (permissao == 0) {
+                AdotantesDAO adotantesDAO = new AdotantesDAO();
+                try {
+                    adotantesDAO.excluir(codAdotante);
+                    model.removeRow(linha);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdotantesCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            limparCampos();
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JComboBox<String> cbSexo;
     private javax.swing.JComboBox<String> cbUF;
     private javax.swing.JLabel jLabel1;
@@ -556,38 +621,42 @@ public class AdotantesCadastro extends javax.swing.JInternalFrame {
         }
         btnCadastrar.setEnabled(true);
         btnAtualizar.setEnabled(false);
+        btnExcluir.setEnabled(false);
     }
 
     private boolean verificarCamposObrigatorios() {
-        Component[] cmps = jPanel1.getComponents();
-        for (Component c : cmps) {
-            System.out.println(c.getName());
-        }
         if (txtNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO NOME VAZIO.");
             txtNome.requestFocus();
             return false;
         }
         if (txtEndereco.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO ENDEREÇO VAZIO.");
             txtEndereco.requestFocus();
             return false;
         }
         if (txtBairro.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO BAIRRO VAZIO.");
             txtBairro.requestFocus();
             return false;
         }
         if (txtCidade.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO CIDADE VAZIO.");
             txtCidade.requestFocus();
             return false;
         }
         if (cbUF.getSelectedIndex() < 1) {
+            JOptionPane.showMessageDialog(null, "CAMPO ESTADO VAZIO.");
             cbUF.requestFocus();
             return false;
         }
         if (txtRG.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO RG VAZIO.");
             txtRG.requestFocus();
             return false;
         }
         if (txtCPF.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO CPF VAZIO.");
             txtCPF.requestFocus();
             return false;
         }

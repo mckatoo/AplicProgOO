@@ -91,7 +91,33 @@ public class UsuariosDAO {
                     UsuariosBean cb = new UsuariosBean();
                     cb.setCodUsuario(rs.getInt("codUsuario"));
                     cb.setLogin(rs.getString("login"));
-                    cb.setSenha(rs.getString("senha"));
+                    listaUsuarios.add(cb);
+                }
+                System.out.println("Listado com sucesso!");
+                return listaUsuarios;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexao.fecharConexao(con, ps, rs);
+        }
+        return null;
+    }
+
+    public List<UsuariosBean> listarUsuarios(String nome) {
+        Connection con = Conexao.abrirConexao();
+        String sql = "select * from usuarios where nome like ?";
+        ResultSet rs = null;
+        List<UsuariosBean> listaUsuarios = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nome + "%");
+            rs = ps.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    UsuariosBean cb = new UsuariosBean();
+                    cb.setCodUsuario(rs.getInt("codUsuario"));
+                    cb.setLogin(rs.getString("login"));
                     listaUsuarios.add(cb);
                 }
                 System.out.println("Listado com sucesso!");
@@ -138,7 +164,6 @@ public class UsuariosDAO {
         String sql = "select * from usuarios where login = ?";
         ResultSet rs = null;
         UsuariosBean usuario = new UsuariosBean();
-
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, login);
@@ -149,7 +174,7 @@ public class UsuariosDAO {
                     usuario.setLogin(rs.getString("login"));
                     usuario.setSenha(rs.getString("senha"));
                 }
-                System.out.println("Localizado com sucesso!");
+                System.out.println("Listado com sucesso!");
                 return usuario;
             }
         } catch (SQLException e) {
